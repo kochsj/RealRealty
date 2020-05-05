@@ -54,11 +54,13 @@ class SearchState extends State<SearchView> {
             fit: BoxFit.cover,
           ),
         ),
-        child: Column(
-//            mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: buttons,
-
+        child: ListView(
+          children: <Widget>[
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: buttons,
+            ),
+          ],
         ),
       ),
 //      body: Center(

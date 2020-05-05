@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>993149838838-c9ttar5mdg4l7p4cs481kf5aldrj4jai.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.993149838838-c9ttar5mdg4l7p4cs481kf5aldrj4jai</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDTCLyfC5PXWCJcdGTMWjeRAiJCfzHREAo</string>
+	<key>GCM_SENDER_ID</key>
+	<string>993149838838</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.realsk.realtyapp</string>
+	<key>PROJECT_ID</key>
+	<string>realrealty-e61fc</string>
+	<key>STORAGE_BUCKET</key>
+	<string>realrealty-e61fc.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:993149838838:ios:e6f5ec936ff5466d5413d7</string>
+	<key>DATABASE_URL</key>
+	<string>https://realrealty-e61fc.firebaseio.com</string>
+</dict>
+</plist>

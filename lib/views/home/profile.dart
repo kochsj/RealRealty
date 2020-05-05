@@ -20,13 +20,20 @@ class ProfilePage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.amber,
-      body: Column(
+      body: ListView(
         children: <Widget>[
           ProfileHeader(profilePic, fullName, phoneNumber, emailAddress),
           ProfileBody(),
-
         ],
       ),
+
+//      body: Column(
+//        children: <Widget>[
+//          ProfileHeader(profilePic, fullName, phoneNumber, emailAddress),
+//          ProfileBody(),
+//
+//        ],
+//      ),
       bottomNavigationBar: MyCustomNavBar(),
     );
 

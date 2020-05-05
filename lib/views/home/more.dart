@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:realtyapp/models/custom_nav_bar.dart';
+import 'package:realtyapp/services/auth.dart';
 
 Text moreText() {
   return Text('More Page', style: TextStyle(fontSize: 36.0),  textWidthBasis: TextWidthBasis.longestLine,);
@@ -11,7 +12,6 @@ class MorePage extends StatelessWidget {
     'Our Team',
     'Mortgage Calculator',
     'Contact Us',
-    'Sign Out',
   ];
 
   @override
@@ -20,16 +20,14 @@ class MorePage extends StatelessWidget {
     for (String name in buttonNames){
       moreChildren.add(MorePageButton(name, Icons.arrow_forward_ios));
     }
+    moreChildren.add(MorePageSignOutButton());
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('More Movil', style: TextStyle(fontSize: 28.0)),
+        title: Text('More Relator', style: TextStyle(fontSize: 28.0)),
       ),
-      body: Container(
-        child: Column(
-//          mainAxisAlignment: MainAxisAlignment.center,
-          children: moreChildren,
-        ),
+      body: ListView(
+        children: moreChildren,
       ),
       bottomNavigationBar: MyCustomNavBar(),
     );
@@ -56,6 +54,28 @@ class MorePageButton extends StatelessWidget {
           children: <Widget>[
             IconButton(icon: Icon(icon)),
             Text(buttonText, style: TextStyle(fontSize: 36),),
+          ],
+        )
+    );
+  }
+}
+
+class MorePageSignOutButton extends StatelessWidget {
+  final AuthService _auth = AuthService();
+
+  @override
+  Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+
+    return RaisedButton(
+        padding: EdgeInsets.only(left: 10.0, top: 25.0, bottom: 25.0),
+        onPressed: () async {
+          await _auth.signOut();
+        },
+        child: Row(
+          children: <Widget>[
+            IconButton(icon: Icon(Icons.power)),
+            Text("Sign Out", style: TextStyle(fontSize: 36),),
           ],
         )
     );
