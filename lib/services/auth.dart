@@ -1,9 +1,26 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:realtyapp/models/user.dart';
 
 class AuthService {
 
   // create instance of firebase auth to communicate with firebase
   final FirebaseAuth _auth = FirebaseAuth.instance;
+
+
+  // create user object based on firebase uid
+  User _userFromFirebaseUser(FirebaseUser user) {
+    return user != null ? User(uid: user.uid) : null;
+  }
+
+
+  // auth change user stream
+  Stream<User> get user {
+    return _auth.onAuthStateChanged.map(
+        (FirebaseUser user) => _userFromFirebaseUser(user)
+    );
+  }
+
+
 
   // sign in anonymously
   Future signInAnonymous() async {
@@ -12,7 +29,7 @@ class AuthService {
 
       // the auth result has access to the user object
       FirebaseUser user = result.user;
-      return user;
+      return _userFromFirebaseUser(user);
 
     } catch(e) {
       print(e.toString());
