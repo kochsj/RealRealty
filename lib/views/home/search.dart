@@ -1,32 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:realtyapp/models/custom_button.dart';
 import 'package:realtyapp/models/custom_nav_bar.dart';
+import 'detail.dart';
 
 
 
 class SearchView extends StatefulWidget {
-//  final bloc;
-//  SearchView(this.bloc);
+  final bloc;
+  SearchView(this.bloc);
 
   @override
   SearchState createState() {
-//    return SearchState(bloc);
-    return SearchState();
+    return SearchState(bloc);
+//    return SearchState();
   }
 }
 
 class SearchState extends State<SearchView> {
   final listOfHouses = ['123 Main St', '54 Park Ave', '701 Stewart St'];
-//  final bloc;
+  final bloc;
 
-//  SearchState(this.bloc);
+  SearchState(this.bloc);
 
 
 
   void _changeToDetailView(String str) {
-    Navigator.pushNamed(context, '/detail',);
+//    Navigator.pushNamed(context, '/detail',);
 
-//    Navigator.pushNamed(context, '/detail', arguments: detail.ScreenArguments(str, bloc));
+    Navigator.pushNamed(context, '/detail', arguments: ScreenArguments(str, bloc));
   }
 
   @override

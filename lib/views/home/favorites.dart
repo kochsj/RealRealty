@@ -14,39 +14,38 @@ List<Client> testClients = [
 ];
 
 class FavoritesPage extends StatefulWidget {
-//  final bloc;
-//  FavoritesPage(this.bloc);
+  final bloc;
+  FavoritesPage(this.bloc);
 
   @override
   FavoritesState createState() {
-//    return FavoritesState(bloc, Center(child: CircularProgressIndicator()));
-    return FavoritesState(Center(child: CircularProgressIndicator()));
-
+    return FavoritesState(bloc, Center(child: CircularProgressIndicator()));
+//    return FavoritesState(Center(child: CircularProgressIndicator()));
   }
 }
 
 class FavoritesState extends State<FavoritesPage> {
-//  final bloc;
+  final bloc;
   Widget _view;
-//  FavoritesState(this.bloc, this._view);
-  FavoritesState(this._view);
+  FavoritesState(this.bloc, this._view);
+//  FavoritesState(this._view);
 
-//  @override
-//  void initState() {
-//    _view = Center(child: CircularProgressIndicator());
-//
-//    _checkDB();
-//  }
-//
-//  void _checkDB() async {
-//    List<Client> _clients = bloc.clients;
-//
-//
-//    setState(() {
-//      _view = FavoritesPageItemWidget(_clients);
-//    });
-//
-//  }
+  @override
+  void initState() {
+    _view = Center(child: CircularProgressIndicator());
+
+    _checkDB();
+  }
+
+  void _checkDB() async {
+    List<Client> _clients = bloc.clients;
+
+
+    setState(() {
+      _view = FavoritesPageItemWidget(_clients);
+    });
+
+  }
 
   @override
   Widget build(BuildContext context) {
