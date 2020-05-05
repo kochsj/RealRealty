@@ -4,23 +4,21 @@ import 'package:realtyapp/services/auth.dart';
 
 
 class SignIn extends StatefulWidget {
-  final callback;
-
-  SignIn(this.callback);
 
   @override
-  _SignInState createState() => _SignInState(callback);
+  _SignInState createState() => _SignInState();
 }
 
 class _SignInState extends State<SignIn> {
-  final callback;
-
-  _SignInState(this.callback);
 
   final AuthService _auth = AuthService();
 
   @override
   Widget build(BuildContext context) {
+
+
+
+
     return Scaffold(
       backgroundColor: Colors.orange,
       appBar: AppBar(
@@ -39,7 +37,6 @@ class _SignInState extends State<SignIn> {
             } else {
               print("signed in!");
               print(result);
-//              callback();
             }
           },
         ),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:realtyapp/views/authenticate/authenticate.dart';
 import 'package:realtyapp/models/user.dart';
-import 'package:realtyapp/views/home/search.dart';
+import 'package:realtyapp/views/home/home.dart';
 
 class Wrapper extends StatelessWidget {
   @override
@@ -16,7 +16,7 @@ class Wrapper extends StatelessWidget {
     if (_user == null) {
       return Authenticate();
     } else {
-      return SearchView();
+      return Home();
     }
 
 //  return Authenticate();

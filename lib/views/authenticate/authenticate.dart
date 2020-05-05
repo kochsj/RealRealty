@@ -11,24 +11,18 @@ class Authenticate extends StatefulWidget {
 
 class _AuthenticateState extends State<Authenticate> {
 
-  bool _isAuth = false;
-
-
-  void _updateAuthStatus() {
-    setState(() {
-      _isAuth = !_isAuth;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    if (_isAuth) {
-      return Scaffold(
-        body: Text("you are logged in"),
-      );
-    } else {
-      return SignIn(_updateAuthStatus);
-    }
+    return MaterialApp(
+      home: SignIn(),
+    );
+
+
+
+
+      return SignIn();
+
+
 
   }
 }
