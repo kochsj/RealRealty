@@ -50,4 +50,12 @@ class AuthService {
   //register with email/pw
 
   // method to sign out
+  Future signOut() async {
+    try {
+      return await _auth.signOut();
+    } catch(e) {
+      print(e.toString());
+      return null;
+    }
+  }
 }

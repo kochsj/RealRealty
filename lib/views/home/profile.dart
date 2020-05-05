@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:realtyapp/models/custom_nav_bar.dart';
+import 'package:realtyapp/models/custom_button.dart';
+import 'package:realtyapp/services/auth.dart';
 
 Text profileText() {
   return Text('Profile Page', style: TextStyle(fontSize: 36.0),  textWidthBasis: TextWidthBasis.longestLine,);
@@ -33,6 +35,8 @@ class ProfilePage extends StatelessWidget {
 
 
 class ProfileHeader extends StatelessWidget {
+  final AuthService _auth = AuthService();
+
   final AssetImage profilePic;
   final String fullName;
   final String phoneNumber;
@@ -54,6 +58,12 @@ class ProfileHeader extends StatelessWidget {
           Text(fullName, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24.0,)),
           Text(phoneNumber,),
           Text(emailAddress),
+          IconButton(
+            icon: Icon(Icons.settings),
+            onPressed: () async {
+              await _auth.signOut();
+            },
+          )
         ],
       ),
     );
