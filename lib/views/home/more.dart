@@ -11,6 +11,7 @@ class MorePage extends StatelessWidget {
     'Our Team',
     'Mortgage Calculator',
     'Contact Us',
+    'Sign Out',
   ];
 
   @override
