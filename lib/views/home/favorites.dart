@@ -37,12 +37,20 @@ class FavoritesState extends State<FavoritesPage> {
     _checkDB();
   }
 
+  void _removeFromDB(int id) async {
+    DBProvider.db.deleteClient(id);
+    List<Client> _clients = await DBProvider.db.getAllClients();
+    setState(() {
+      _view = FavoritesPageItemWidget(_clients, _removeFromDB);
+    });
+  }
+
   void _checkDB() async {
     List<Client> _clients = bloc.clients;
 
 
     setState(() {
-      _view = FavoritesPageItemWidget(_clients);
+      _view = FavoritesPageItemWidget(_clients, _removeFromDB);
     });
 
   }
@@ -68,8 +76,9 @@ class FavoritesState extends State<FavoritesPage> {
 
 class FavoritesPageItemWidget extends StatelessWidget {
   final List<Client> _clients;
+  final Function _callback;
 
-  FavoritesPageItemWidget(this._clients);
+  FavoritesPageItemWidget(this._clients, this._callback);
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +89,12 @@ class FavoritesPageItemWidget extends StatelessWidget {
           return ListTile(
             title: Text(item.firstName),
             leading: Text(item.id.toString()),
-            trailing: Checkbox(value: item.blocked == 1,),
+            trailing: FlatButton(
+              child: Icon(Icons.delete),
+              onPressed: () {
+                _callback(item.id);
+              },
+            ),
           );
         });
   }

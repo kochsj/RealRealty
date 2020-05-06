@@ -12,12 +12,10 @@ class Authenticate extends StatefulWidget {
 
 class _AuthenticateState extends State<Authenticate> {
 
-//  bool showSignIn = true;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-//      home: showSignIn == true ? SignIn() : Register(),
       home: SignIn(),
       initialRoute: '/',
       routes: {
