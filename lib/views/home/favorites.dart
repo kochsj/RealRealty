@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:realtyapp/models/client_model.dart';
+import 'package:realtyapp/models/house_model.dart';
 import 'package:realtyapp/models/custom_nav_bar.dart';
 import 'package:realtyapp/models/database.dart';
 
@@ -7,11 +7,6 @@ Text favoritesText() {
   return Text('My Favorites Page', style: TextStyle(fontSize: 36.0),  textWidthBasis: TextWidthBasis.longestLine,);
 }
 
-List<Client> testClients = [
-  Client(firstName: "Raouf", lastName: "Rahiche", blocked: 0),
-  Client(firstName: "Zaki", lastName: "oun", blocked: 1),
-  Client(firstName: "oussama", lastName: "ali", blocked: 0),
-];
 
 class FavoritesPage extends StatefulWidget {
   final bloc;
@@ -41,7 +36,7 @@ class FavoritesState extends State<FavoritesPage> {
     await bloc.delete(id);
     await bloc.getClients();
 
-    List<Client> _clients = bloc.clients;
+    List<House> _clients = bloc.clients;
 
     setState(() {
       _view = FavoritesPageItemWidget(_clients, _removeFromDB);
@@ -49,7 +44,7 @@ class FavoritesState extends State<FavoritesPage> {
   }
 
   void _checkDB() async {
-    List<Client> _clients = bloc.clients;
+    List<House> _clients = bloc.clients;
 
     setState(() {
       _view = FavoritesPageItemWidget(_clients, _removeFromDB);
@@ -76,7 +71,7 @@ class FavoritesState extends State<FavoritesPage> {
 }
 
 class FavoritesPageItemWidget extends StatelessWidget {
-  final List<Client> _clients;
+  final List<House> _clients;
   final Function _callback;
 
   FavoritesPageItemWidget(this._clients, this._callback);
@@ -86,9 +81,9 @@ class FavoritesPageItemWidget extends StatelessWidget {
     return ListView.builder(
         itemCount: _clients.length,
         itemBuilder: (context, index) {
-          Client item = _clients[index];
+          House item = _clients[index];
           return ListTile(
-            title: Text(item.firstName),
+            title: Text(item.streetAddress),
             leading: Text(item.id.toString()),
             trailing: FlatButton(
               child: Icon(Icons.delete),

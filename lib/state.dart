@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'models/client_model.dart';
+import 'models/house_model.dart';
 import 'models/database.dart';
 
 
@@ -8,14 +8,14 @@ class ClientsBloc {
     getClients();
   }
 
-  List<Client> clients;
+  List<House> clients;
 
   getClients() async {
     await DBProvider.db.getAllClients().then((lst) => clients = lst);
   }
 
-  Client getOneClient(int id) {
-    Client _client = DBProvider.db.getClient(id);
+  House getOneClient(int id) {
+    House _client = DBProvider.db.getClient(id);
     return _client;
   }
 
@@ -24,12 +24,12 @@ class ClientsBloc {
     getClients();
   }
 
-  add(Client client) {
+  add(House client) {
     DBProvider.db.newClient(client);
     getClients();
   }
 
-  update(Client client) {
+  update(House client) {
     DBProvider.db.updateClient(client);
   }
 

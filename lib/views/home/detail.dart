@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:realtyapp/models/client_model.dart';
+import 'package:realtyapp/models/house_model.dart';
 
 
 Text detailText() {
@@ -24,6 +24,7 @@ class DetailPage extends StatefulWidget {
 class DetailState extends State<DetailPage> {
   bool _isFavorite = false;
 
+
   DetailViewFavoriteButton _favoriteButton;
 
   void toggleFavorite(args, bool fav) {
@@ -37,8 +38,8 @@ class DetailState extends State<DetailPage> {
   Widget build(BuildContext context) {
     final ScreenArguments args = ModalRoute.of(context).settings.arguments;
 
-    for (Client house in args.bloc.clients) {
-      if (house.firstName == args.houseInfo) {
+    for (House house in args.bloc.clients) {
+      if (house.streetAddress == args.houseInfo) {
         setState(() {
           _isFavorite = true;
         });
@@ -83,20 +84,23 @@ class DetailViewFavoriteButton extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(top: 70.0),
       child: new Builder(builder: (thisContext) {
-        return new FloatingActionButton.extended(onPressed: () {
-
-          Scaffold.of(thisContext).showSnackBar(
-              new SnackBar(
-                  content: new Text("Added to Favorites!", style: TextStyle(fontSize: 24.0),))
-          );
-          for (Client c in args.bloc.clients) {
-            if (c.firstName == args.houseInfo) {
-              args.bloc.delete(c.id);
+        return new FloatingActionButton.extended(onPressed: () async {
+          for (House c in args.bloc.clients) {
+            if (c.streetAddress == args.houseInfo) {
+              Scaffold.of(thisContext).showSnackBar(
+                  new SnackBar(
+                      content: new Text("Removed from Favorites.", style: TextStyle(fontSize: 24.0),))
+              );
+              await args.bloc.delete(c.id);
               _callback(args, false);
               return;
             }
           }
-          args.bloc.add(Client(firstName: args.houseInfo, lastName: "Rahiche", blocked: 0));
+          Scaffold.of(thisContext).showSnackBar(
+              new SnackBar(
+                  content: new Text("Added to Favorites!", style: TextStyle(fontSize: 24.0),))
+          );
+          await args.bloc.add(House(streetAddress: args.houseInfo, state: "Rahiche"));
 
           _callback(args, true);
         },
