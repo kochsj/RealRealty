@@ -38,8 +38,11 @@ class FavoritesState extends State<FavoritesPage> {
   }
 
   void _removeFromDB(int id) async {
-    DBProvider.db.deleteClient(id);
-    List<Client> _clients = await DBProvider.db.getAllClients();
+    await bloc.delete(id);
+    await bloc.getClients();
+
+    List<Client> _clients = bloc.clients;
+
     setState(() {
       _view = FavoritesPageItemWidget(_clients, _removeFromDB);
     });
@@ -48,11 +51,9 @@ class FavoritesState extends State<FavoritesPage> {
   void _checkDB() async {
     List<Client> _clients = bloc.clients;
 
-
     setState(() {
       _view = FavoritesPageItemWidget(_clients, _removeFromDB);
     });
-
   }
 
   @override
