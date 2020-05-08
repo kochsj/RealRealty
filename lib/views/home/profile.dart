@@ -17,13 +17,11 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-//    String fullName = "bloc.currentUser.firstName + ' ' + bloc.currentUser.lastName";
-//    String phoneNumber = "bloc.currentUser.phoneNumber";
-//    String emailAddress = "bloc.currentUser.emailAddress";
-
-    String fullName = bloc.currentUser.firstName + ' ' + bloc.currentUser.lastName;
-    String phoneNumber = bloc.currentUser.phoneNumber;
-    String emailAddress = bloc.currentUser.email;
+    String firstName = bloc.currentUser.firstName != null ? bloc.currentUser.firstName : '';
+    String lastName = bloc.currentUser.lastName != null ? bloc.currentUser.lastName : '';
+    String fullName = firstName + ' ' + lastName;
+    String phoneNumber = bloc.currentUser.phoneNumber != null ? bloc.currentUser.phoneNumber : '';
+    String emailAddress = bloc.currentUser.email != null ? bloc.currentUser.email : '';
 
 
     return Scaffold(

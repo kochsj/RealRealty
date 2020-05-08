@@ -13,24 +13,6 @@ class DBProvider {
 
   static String path;
 
-//  final Future<Database> database = openDatabase(
-//      join(getDatabasePath(), "TestDB.db"),
-//      onCreate: (db, version) {
-//        return db.execute(sql)
-//      }
-//
-//  )
-//
-//  static getDatabasePath() async {
-//    Directory documentsDirectory = await getApplicationDocumentsDirectory();
-//    path = join(documentsDirectory.path, "TestDB.db");
-//    return path;
-//  }
-
-
-
-
-
   Future<Database> get database async {
     if (_database != null)
       return _database;
