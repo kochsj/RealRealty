@@ -15,6 +15,9 @@ class _RegisterState extends State<Register> {
   // text field state
   String _email = '';
   String _password = '';
+  String _firstName = '';
+  String _lastName = '';
+  String _phoneNumber = '';
   String _error = '';
 
   @override
@@ -71,12 +74,48 @@ class _RegisterState extends State<Register> {
                   },
                 ),
                 SizedBox(height: 20,),
+                TextFormField(
+                  decoration: InputDecoration(
+                    hintText: "first name",
+                  ),
+                  validator: (value) => value.length < 1 ? "first name required" : null,
+                  onChanged: (value) {
+                    setState(() {
+                      _firstName = value;
+                    });
+                  },
+                ),
+                SizedBox(height: 20,),
+                TextFormField(
+                  decoration: InputDecoration(
+                    hintText: "last name",
+                  ),
+                  validator: (value) => value.length < 1 ? "last name required" : null,
+                  onChanged: (value) {
+                    setState(() {
+                      _lastName = value;
+                    });
+                  },
+                ),
+                SizedBox(height: 20,),
+                TextFormField(
+                  decoration: InputDecoration(
+                    hintText: "phone number",
+                  ),
+                  validator: (value) => value.length < 10 ? "valid phone number required" : null,
+                  onChanged: (value) {
+                    setState(() {
+                      _phoneNumber = value;
+                    });
+                  },
+                ),
+                SizedBox(height: 20,),
                 RaisedButton(
                   color: Colors.green,
                   child: Text("Register", style: TextStyle(color: Colors.white),),
                   onPressed: () async {
                     if(_formKey.currentState.validate()) {
-                      dynamic result = await _auth.registerWithEmailAndPassword(_email, _password);
+                      dynamic result = await _auth.registerWithEmailAndPassword(_email, _password, _firstName, _lastName, _phoneNumber);
                       if (result == null) {
                         setState(() {
                           _error = "Could not sign in with these credentials";
@@ -87,8 +126,6 @@ class _RegisterState extends State<Register> {
                 ),
                 SizedBox(height: 20,),
                 Text(_error, style: TextStyle(color: Colors.black, fontSize: 28.0),)
-
-
 
               ],
             ),

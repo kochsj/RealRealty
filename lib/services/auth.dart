@@ -8,8 +8,8 @@ class AuthService {
 
 
   // create user object based on firebase uid
-  User _userFromFirebaseUser(FirebaseUser user) {
-    return user != null ? User(uid: user.uid) : null;
+  User _userFromFirebaseUser(FirebaseUser user, [String firstName, String lastName, String phoneNumber, String email]) {
+    return user != null ? User(uid: user.uid, firstName: firstName, lastName: lastName, phoneNumber: phoneNumber, email: email) : null;
   }
 
 
@@ -23,19 +23,19 @@ class AuthService {
 
 
   // sign in anonymously
-  Future signInAnonymous() async {
-    try {
-      AuthResult result = await _auth.signInAnonymously(); //returns an "auth result object"
-
-      // the auth result has access to the user object
-      FirebaseUser user = result.user;
-      return _userFromFirebaseUser(user);
-
-    } catch(e) {
-      print(e.toString());
-      return null;
-    }
-  }
+//  Future signInAnonymous() async {
+//    try {
+//      AuthResult result = await _auth.signInAnonymously(); //returns an "auth result object"
+//
+//      // the auth result has access to the user object
+//      FirebaseUser user = result.user;
+//      return _userFromFirebaseUser(user);
+//
+//    } catch(e) {
+//      print(e.toString());
+//      return null;
+//    }
+//  }
 
   //sign in with email/pw
   Future signInEmail(String email, String password) async {
@@ -50,11 +50,11 @@ class AuthService {
   }
 
   //register with email/pw
-  Future registerWithEmailAndPassword(String email, String password) async {
+  Future registerWithEmailAndPassword(String email, String password, String firstName, String lastName, String phoneNumber) async {
     try {
       AuthResult _result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       FirebaseUser _user = _result.user;
-      return _userFromFirebaseUser(_user);
+      return _userFromFirebaseUser(_user, firstName, lastName, phoneNumber, email);
     } catch(e) {
       print(e.toString());
       return null;
