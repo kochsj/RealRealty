@@ -13,6 +13,24 @@ class DBProvider {
 
   static String path;
 
+//  final Future<Database> database = openDatabase(
+//      join(getDatabasePath(), "TestDB.db"),
+//      onCreate: (db, version) {
+//        return db.execute(sql)
+//      }
+//
+//  )
+//
+//  static getDatabasePath() async {
+//    Directory documentsDirectory = await getApplicationDocumentsDirectory();
+//    path = join(documentsDirectory.path, "TestDB.db");
+//    return path;
+//  }
+
+
+
+
+
   Future<Database> get database async {
     if (_database != null)
       return _database;
@@ -23,11 +41,11 @@ class DBProvider {
   }
 
   initDB() async {
-    print("xxxxxxxxxxx making new DB xxxxxxxxxxxxx");
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     path = join(documentsDirectory.path, "TestDB.db");
     return await openDatabase(path, version: 1, onOpen: (db) {
     }, onCreate: (Database db, int version) async {
+      print("xxxxxxxxxxx making new DB xxxxxxxxxxxxx");
       await db.execute("CREATE TABLE Houses ("
           "id INTEGER PRIMARY KEY,"
           "street_address TEXT,"

@@ -17,7 +17,7 @@ class ClientsBloc {
   getUser(String uid) async {
     User _user = await DBProvider.db.getUser(uid);
     currentUser = _user;
-    return _user;
+//    return _user;
   }
 
   deleteUser(int id) {

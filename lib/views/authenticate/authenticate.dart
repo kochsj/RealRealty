@@ -20,18 +20,12 @@ class _AuthenticateState extends State<Authenticate> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: SignIn(),
+      home: SignIn(widget.bloc),
       initialRoute: '/',
       routes: {
         '/register': (context) => Register(widget.bloc),
       },
     );
-
-
-
-
-      return SignIn();
-
 
 
   }

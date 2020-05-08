@@ -4,6 +4,8 @@ import 'package:realtyapp/services/auth.dart';
 
 
 class SignIn extends StatefulWidget {
+  final bloc;
+  SignIn(this.bloc);
 
   @override
   _SignInState createState() => _SignInState();
@@ -79,6 +81,7 @@ class _SignInState extends State<SignIn> {
                               _error = "Invalid request";
                             });
                           }
+                          await widget.bloc.getUser(result.uid);
                         }
                       },
                     ),
