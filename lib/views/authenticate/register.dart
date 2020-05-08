@@ -121,6 +121,7 @@ class _RegisterState extends State<Register> {
                           _error = "Could not sign in with these credentials";
                         });
                       }
+                      // TODO: add user to db
                     }
                   },
                 ),
