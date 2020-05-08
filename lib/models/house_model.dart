@@ -14,12 +14,14 @@ String clientToJson(House data) {
 class House {
   int id;
   String streetAddress;
+  String city;
   String state;
   String zipCode;
 
   House({
     this.id,
     this.streetAddress,
+    this.city,
     this.state,
     this.zipCode,
   });
@@ -27,6 +29,7 @@ class House {
   factory House.fromMap(Map<String, dynamic> json) => new House(
         id: json["id"],
         streetAddress: json["street_address"],
+        city: json["city"],
         state: json["state"],
         zipCode: json["zip_code"],
       );
@@ -34,6 +37,7 @@ class House {
   Map<String, dynamic> toMap() => {
         "id": id,
         "street_address": streetAddress,
+        "city": city,
         "state": state,
         "zip_code": zipCode,
       };

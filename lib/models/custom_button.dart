@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
-GestureDetector customButton(BuildContext context, String message, double top, double left, [callback]) {
+import 'house_model.dart';
+
+GestureDetector customButton(BuildContext context, House house, double top, double left, [callback]) {
   return GestureDetector(
     onTap: () {
-      callback(message);
+      callback(house);
     },
     // The custom button
     child: Container(
@@ -14,7 +16,7 @@ GestureDetector customButton(BuildContext context, String message, double top, d
           borderRadius: BorderRadius.circular(8.0),
           border: Border.all(color: Colors.black)
       ),
-      child: Text('$message'),
+      child: Text(house.streetAddress),
     ),
   );
 }

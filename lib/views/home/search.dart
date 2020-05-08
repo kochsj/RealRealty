@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:realtyapp/models/custom_button.dart';
 import 'package:realtyapp/models/custom_nav_bar.dart';
+import 'package:realtyapp/models/house_model.dart';
 import 'detail.dart';
 
 
@@ -17,17 +18,22 @@ class SearchView extends StatefulWidget {
 }
 
 class SearchState extends State<SearchView> {
-  final listOfHouses = ['123 Main St', '54 Park Ave', '701 Stewart St'];
+  final listOfHouses = [
+    House(streetAddress: '123 Main St', state: 'WA', city: 'Woodinville', zipCode: '98072'),
+    House(streetAddress: '54 Park Ave', state: 'WA', city: 'Woodinville', zipCode: '98071'),
+    House(streetAddress: '701 Stewart St', state: 'WA', city: 'Woodinville', zipCode: '98073'),
+  ];
+
   final bloc;
 
   SearchState(this.bloc);
 
 
 
-  void _changeToDetailView(String str) {
+  void _changeToDetailView(House houseToView) {
 //    Navigator.pushNamed(context, '/detail',);
 
-    Navigator.pushNamed(context, '/detail', arguments: ScreenArguments(str, bloc));
+    Navigator.pushNamed(context, '/detail', arguments: ScreenArguments(houseToView, bloc));
   }
 
   @override
@@ -35,10 +41,10 @@ class SearchState extends State<SearchView> {
     List<Widget> buttons = [];
     double top = 10;
     double left = 300;
-    for(var i in listOfHouses) {
+    for(House i in listOfHouses) {
       top += 70;
       left -= 60;
-      buttons.add(customButton(context, '$i', top, left, _changeToDetailView));
+      buttons.add(customButton(context, i, top, left, _changeToDetailView));
     }
 
     Scaffold searchScaffold = Scaffold(

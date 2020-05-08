@@ -7,7 +7,7 @@ Text detailText() {
 }
 
 class ScreenArguments {
-  final String houseInfo;
+  final House houseInfo;
   final bloc;
   ScreenArguments(this.houseInfo, this.bloc);
 }
@@ -39,7 +39,7 @@ class DetailState extends State<DetailPage> {
     final ScreenArguments args = ModalRoute.of(context).settings.arguments;
 
     for (House house in args.bloc.clients) {
-      if (house.streetAddress == args.houseInfo) {
+      if (house.streetAddress == args.houseInfo.streetAddress) {
         setState(() {
           _isFavorite = true;
         });
@@ -50,14 +50,14 @@ class DetailState extends State<DetailPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(args.houseInfo),
+        title: Text(args.houseInfo.streetAddress),
       ),
       body: Center(
         child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               _favoriteButton,
-              Text(args.houseInfo, style: TextStyle(fontSize: 28.0)),
+              Text(args.houseInfo.streetAddress, style: TextStyle(fontSize: 28.0)),
               Text('here are some details'),
               Text('sq.ft, bedrooms, bathrooms, etc...'),
             ]
@@ -86,7 +86,7 @@ class DetailViewFavoriteButton extends StatelessWidget {
       child: new Builder(builder: (thisContext) {
         return new FloatingActionButton.extended(onPressed: () async {
           for (House c in args.bloc.clients) {
-            if (c.streetAddress == args.houseInfo) {
+            if (c.streetAddress == args.houseInfo.streetAddress) {
               Scaffold.of(thisContext).showSnackBar(
                   new SnackBar(
                       content: new Text("Removed from Favorites.", style: TextStyle(fontSize: 24.0),))
@@ -100,7 +100,7 @@ class DetailViewFavoriteButton extends StatelessWidget {
               new SnackBar(
                   content: new Text("Added to Favorites!", style: TextStyle(fontSize: 24.0),))
           );
-          await args.bloc.add(House(streetAddress: args.houseInfo, state: "Rahiche"));
+          await args.bloc.add(args.houseInfo);
 
           _callback(args, true);
         },
