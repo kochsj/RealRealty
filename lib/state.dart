@@ -10,13 +10,13 @@ class ClientsBloc {
     getHouses();
   }
 
-  List<House> houses;
-  String currentUID;
+  List<House> houses = [];
+  User currentUser = User();
 
 // USER(S) //////////////////////////////
-  getUser(int id) async {
-    User _user = DBProvider.db.getUser(id);
-    currentUID = _user.uid;
+  getUser(String uid) async {
+    User _user = await DBProvider.db.getUser(uid);
+    currentUser = _user;
     return _user;
   }
 
@@ -24,9 +24,9 @@ class ClientsBloc {
     DBProvider.db.deleteUser(id);
   }
 
-  addUser(User user) {
-    DBProvider.db.newUser(user);
-    currentUID = user.uid;
+  addUser(User user) async {
+    await DBProvider.db.newUser(user);
+    currentUser = user;
   }
 
   updateUser(User user) {
@@ -38,8 +38,8 @@ class ClientsBloc {
     await DBProvider.db.getAllHouses().then((lst) => houses = lst);
   }
 
-  House getOneHouse(int id) {
-    House _house = DBProvider.db.getHouse(id);
+  getOneHouse(int id) async {
+    House _house = await DBProvider.db.getHouse(id);
     return _house;
   }
 

@@ -7,22 +7,30 @@ Text profileText() {
   return Text('Profile Page', style: TextStyle(fontSize: 36.0),  textWidthBasis: TextWidthBasis.longestLine,);
 }
 
-class ProfilePage extends StatelessWidget {
-  final AssetImage profilePic;
-  final String fullName;
-  final String phoneNumber;
-  final String emailAddress;
+const AssetImage example = AssetImage("media/emoji.png");
 
-  ProfilePage(this.fullName, this.phoneNumber, this.emailAddress, [this.profilePic = example]);
+
+class ProfilePage extends StatelessWidget {
+  final bloc;
+
+  ProfilePage(this.bloc);
 
   @override
   Widget build(BuildContext context) {
+//    String fullName = "bloc.currentUser.firstName + ' ' + bloc.currentUser.lastName";
+//    String phoneNumber = "bloc.currentUser.phoneNumber";
+//    String emailAddress = "bloc.currentUser.emailAddress";
+
+    String fullName = bloc.currentUser.firstName + ' ' + bloc.currentUser.lastName;
+    String phoneNumber = bloc.currentUser.phoneNumber;
+    String emailAddress = bloc.currentUser.email;
+
 
     return Scaffold(
       backgroundColor: Colors.amber,
       body: ListView(
         children: <Widget>[
-          ProfileHeader(profilePic, fullName, phoneNumber, emailAddress),
+          ProfileHeader(example, fullName, phoneNumber, emailAddress),
           ProfileBody(),
         ],
       ),
@@ -76,7 +84,6 @@ class ProfileHeader extends StatelessWidget {
     );
   }
 }
-const AssetImage example = AssetImage("media/emoji.png");
 
 class ProfileBody extends StatelessWidget {
   @override

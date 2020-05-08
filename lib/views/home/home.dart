@@ -23,7 +23,7 @@ class Home extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/favorites': (context) => FavoritesPage(bloc),
-        '/profile': (context) => ProfilePage("John Smith", "(520)444-1234", "john.smith@email.com"),
+        '/profile': (context) => ProfilePage(bloc),
         '/chat': (context) => ChatPage(),
         '/more': (context) => MorePage(),
         '/detail': (context) => DetailPage(),

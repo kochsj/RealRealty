@@ -23,6 +23,7 @@ class DBProvider {
   }
 
   initDB() async {
+    print("xxxxxxxxxxx making new DB xxxxxxxxxxxxx");
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     path = join(documentsDirectory.path, "TestDB.db");
     return await openDatabase(path, version: 1, onOpen: (db) {
@@ -64,10 +65,18 @@ class DBProvider {
     return res;
   }
 
-  getUser(int id) async {
+  getAllUsers() async {
     final db = await database;
-    var res =await  db.query("User", where: "id = ?", whereArgs: [id]);
-    return res.isNotEmpty ? House.fromMap(res.first) : Null ;
+    var res = await db.query("User");
+    List<User> list =
+    res.isNotEmpty ? res.map((c) => User.fromMap(c)).toList() : [];
+    return list;
+  }
+
+  getUser(String uid) async {
+    final db = await database;
+    var res = await db.query("User", where: "uid = ?", whereArgs: [uid]);
+    return res.isNotEmpty ? User.fromMap(res.first) : Null ;
   }
 
   updateUser(User newUser) async {
@@ -115,6 +124,9 @@ class DBProvider {
     final db = await database;
     db.delete("Houses", where: "id = ?", whereArgs: [id]);
   }
+
+
+
 
   deleteAll() async {
     deleteDatabase(path);

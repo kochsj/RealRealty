@@ -126,10 +126,15 @@ class _RegisterState extends State<Register> {
                         });
                       }
                       // TODO: add user to db
-                      widget.bloc.addUser(result);
-                      User _user = await widget.bloc.getUser(result.id);
-
+                      await widget.bloc.addUser(result);
+                      User _user = await widget.bloc.getUser(result.uid);
+                      print("this is the user(?)");
                       print(_user);
+                      print("user from bloc:");
+                      print(widget.bloc.currentUser);
+                      print("user name?");
+                      print(widget.bloc.currentUser.firstName);
+
                     }
                   },
                 ),
