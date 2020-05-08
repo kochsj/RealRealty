@@ -8,7 +8,9 @@ import '../../state.dart';
 import 'favorites.dart';
 
 class Home extends StatelessWidget {
-  final bloc = ClientsBloc();
+//  final bloc = ClientsBloc();
+  final bloc;
+  Home(this.bloc);
 
   @override
   Widget build(BuildContext context) {

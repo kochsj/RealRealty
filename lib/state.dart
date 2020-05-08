@@ -1,36 +1,60 @@
 import 'dart:async';
+import 'package:realtyapp/models/user.dart';
+
 import 'models/house_model.dart';
 import 'models/database.dart';
 
 
 class ClientsBloc {
   ClientsBloc() {
-    getClients();
+    getHouses();
   }
 
-  List<House> clients;
+  List<House> houses;
+  String currentUID;
 
-  getClients() async {
-    await DBProvider.db.getAllClients().then((lst) => clients = lst);
+// USER(S) //////////////////////////////
+  getUser(int id) async {
+    User _user = DBProvider.db.getUser(id);
+    currentUID = _user.uid;
+    return _user;
   }
 
-  House getOneClient(int id) {
-    House _client = DBProvider.db.getClient(id);
-    return _client;
+  deleteUser(int id) {
+    DBProvider.db.deleteUser(id);
   }
 
-  delete(int id) {
-    DBProvider.db.deleteClient(id);
-    getClients();
+  addUser(User user) {
+    DBProvider.db.newUser(user);
+    currentUID = user.uid;
   }
 
-  add(House client) {
-    DBProvider.db.newClient(client);
-    getClients();
+  updateUser(User user) {
+    DBProvider.db.updateUser(user);
   }
 
-  update(House client) {
-    DBProvider.db.updateClient(client);
+// HOUSES //////////////////////////////
+  getHouses() async {
+    await DBProvider.db.getAllHouses().then((lst) => houses = lst);
+  }
+
+  House getOneHouse(int id) {
+    House _house = DBProvider.db.getHouse(id);
+    return _house;
+  }
+
+  deleteHouse(int id) {
+    DBProvider.db.deleteHouse(id);
+    getHouses();
+  }
+
+  addHouse(House client) {
+    DBProvider.db.newHouse(client);
+    getHouses();
+  }
+
+  updateHouse(House client) {
+    DBProvider.db.updateHouse(client);
   }
 
 }

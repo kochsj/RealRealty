@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:realtyapp/models/user.dart';
 import 'package:sqflite/sqflite.dart';
 import 'house_model.dart';
 
@@ -33,22 +34,69 @@ class DBProvider {
           "state TEXT,"
           "zip_code TEXT"
           ")");
+      await db.execute("CREATE TABLE User ("
+          "id INTEGER PRIMARY KEY,"
+          "uid TEXT,"
+          "first_name TEXT,"
+          "last_name TEXT,"
+          "phone_number TEXT,"
+          "email TEXT,"
+          "house INTEGER,"
+          "agent INTEGER,"
+          "profile_picture BLOB,"
+          "FOREIGN KEY(house) REFERENCES Houses(id),"
+          "FOREIGN KEY(agent) REFERENCES Agents(id)"
+          ")");
+      await db.execute("CREATE TABLE Agents ("
+          "id INTEGER PRIMARY KEY,"
+          "first_name TEXT,"
+          "last_name TEXT,"
+          "phone_number TEXT,"
+          "email TEXT"
+          ")");
     });
   }
 
-  newClient(House newHouse) async {
+  // USER(S) /////////////////////////////////////////////////////
+  newUser(User newUser) async {
+    final db = await database;
+    var res = await db.insert("User", newUser.toMap());
+    return res;
+  }
+
+  getUser(int id) async {
+    final db = await database;
+    var res =await  db.query("User", where: "id = ?", whereArgs: [id]);
+    return res.isNotEmpty ? House.fromMap(res.first) : Null ;
+  }
+
+  updateUser(User newUser) async {
+    final db = await database;
+    var res = await db.update("User", newUser.toMap(),
+        where: "id = ?", whereArgs: [newUser.uid]);
+    return res;
+  }
+
+  deleteUser(int id) async {
+    final db = await database;
+    db.delete("User", where: "id = ?", whereArgs: [id]);
+  }
+
+
+  // HOUSES /////////////////////////////////////////////////////
+  newHouse(House newHouse) async {
     final db = await database;
     var res = await db.insert("Houses", newHouse.toMap());
     return res;
   }
 
-  getClient(int id) async {
+  getHouse(int id) async {
     final db = await database;
     var res =await  db.query("Houses", where: "id = ?", whereArgs: [id]);
     return res.isNotEmpty ? House.fromMap(res.first) : Null ;
   }
 
-  getAllClients() async {
+  getAllHouses() async {
     final db = await database;
     var res = await db.query("Houses");
     List<House> list =
@@ -56,22 +104,14 @@ class DBProvider {
     return list;
   }
 
-//  getBlockedClients() async {
-//    final db = await database;
-//    var res = await db.rawQuery("SELECT * FROM Houses WHERE blocked=1");
-//    List<House> list =
-//    res.isNotEmpty ? res.toList().map((c) => House.fromMap(c)) : null;
-//    return list;
-//  }
-
-  updateClient(House newHouse) async {
+  updateHouse(House newHouse) async {
     final db = await database;
     var res = await db.update("Houses", newHouse.toMap(),
         where: "id = ?", whereArgs: [newHouse.id]);
     return res;
   }
 
-  deleteClient(int id) async {
+  deleteHouse(int id) async {
     final db = await database;
     db.delete("Houses", where: "id = ?", whereArgs: [id]);
   }

@@ -38,7 +38,7 @@ class DetailState extends State<DetailPage> {
   Widget build(BuildContext context) {
     final ScreenArguments args = ModalRoute.of(context).settings.arguments;
 
-    for (House house in args.bloc.clients) {
+    for (House house in args.bloc.houses) {
       if (house.streetAddress == args.houseInfo.streetAddress) {
         setState(() {
           _isFavorite = true;
@@ -85,13 +85,13 @@ class DetailViewFavoriteButton extends StatelessWidget {
       padding: EdgeInsets.only(top: 70.0),
       child: new Builder(builder: (thisContext) {
         return new FloatingActionButton.extended(onPressed: () async {
-          for (House c in args.bloc.clients) {
+          for (House c in args.bloc.houses) {
             if (c.streetAddress == args.houseInfo.streetAddress) {
               Scaffold.of(thisContext).showSnackBar(
                   new SnackBar(
                       content: new Text("Removed from Favorites.", style: TextStyle(fontSize: 24.0),))
               );
-              await args.bloc.delete(c.id);
+              await args.bloc.deleteHouse(c.id);
               _callback(args, false);
               return;
             }
@@ -100,7 +100,7 @@ class DetailViewFavoriteButton extends StatelessWidget {
               new SnackBar(
                   content: new Text("Added to Favorites!", style: TextStyle(fontSize: 24.0),))
           );
-          await args.bloc.add(args.houseInfo);
+          await args.bloc.addHouse(args.houseInfo);
 
           _callback(args, true);
         },

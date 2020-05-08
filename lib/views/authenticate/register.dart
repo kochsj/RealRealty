@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:realtyapp/models/user.dart';
 import 'package:realtyapp/services/auth.dart';
 
 class Register extends StatefulWidget {
+  final bloc;
+  Register(this.bloc);
+
   @override
   _RegisterState createState() => _RegisterState();
 }
@@ -122,6 +126,10 @@ class _RegisterState extends State<Register> {
                         });
                       }
                       // TODO: add user to db
+                      widget.bloc.addUser(result);
+                      User _user = await widget.bloc.getUser(result.id);
+
+                      print(_user);
                     }
                   },
                 ),

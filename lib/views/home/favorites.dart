@@ -33,10 +33,10 @@ class FavoritesState extends State<FavoritesPage> {
   }
 
   void _removeFromDB(int id) async {
-    await bloc.delete(id);
-    await bloc.getClients();
+    await bloc.deleteHouse(id);
+    await bloc.getHouses();
 
-    List<House> _clients = bloc.clients;
+    List<House> _clients = bloc.houses;
 
     setState(() {
       _view = FavoritesPageItemWidget(_clients, _removeFromDB);
@@ -44,7 +44,7 @@ class FavoritesState extends State<FavoritesPage> {
   }
 
   void _checkDB() async {
-    List<House> _clients = bloc.clients;
+    List<House> _clients = bloc.houses != null ? bloc.houses : [];
 
     setState(() {
       _view = FavoritesPageItemWidget(_clients, _removeFromDB);
