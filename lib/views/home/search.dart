@@ -35,7 +35,7 @@ class SearchState extends State<SearchView> {
     for(House i in listOfHouses) {
       top += 70;
       left -= 60;
-      buttons.add(customButton(context, i, top, left, _changeToDetailView));
+      buttons.add(customSearchViewHouseButton(context, i, top, left, _changeToDetailView));
     }
 
     Scaffold searchScaffold = Scaffold(

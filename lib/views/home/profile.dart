@@ -52,7 +52,6 @@ class ProfilePage extends StatelessWidget {
 }
 
 class ProfileHeader extends StatelessWidget {
-  final AuthService _auth = AuthService();
 
   final AssetImage profilePic;
   final String fullName;
@@ -75,12 +74,6 @@ class ProfileHeader extends StatelessWidget {
           Text(fullName, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24.0,)),
           Text(phoneNumber,),
           Text(emailAddress),
-          IconButton(
-            icon: Icon(Icons.settings),
-            onPressed: () async {
-              await _auth.signOut();
-            },
-          )
         ],
       ),
     );
@@ -88,6 +81,12 @@ class ProfileHeader extends StatelessWidget {
 }
 
 class ProfileBody extends StatelessWidget {
+  final AuthService _auth = AuthService();
+
+  void signOut() async {
+    await _auth.signOut();
+  }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -97,13 +96,25 @@ class ProfileBody extends StatelessWidget {
         width: width,
         child: Column(
           children: <Widget>[
-            YourAgentRow(),
-            YourHomeRow(),
-            ProfilePageButton("Preferences", Icons.account_circle),
-            ProfilePageButton("Settings", Icons.settings),
-            ProfilePageButton("My Documents", Icons.archive)
-
+            customListMenuButton(context, "Preferences", width, Icons.account_circle),
+            customListMenuButton(context, "Settings", width, Icons.settings),
+            customListMenuButton(context, "My Documents", width, Icons.archive),
+            customListMenuButton(context, "Sign Out", width, Icons.settings_power, signOut),
           ],
+//          children: <Widget>[
+//            YourAgentRow(),
+//            YourHomeRow(),
+//            ProfilePageButton("Preferences", Icons.account_circle),
+//            ProfilePageButton("Settings", Icons.settings),
+//            ProfilePageButton("My Documents", Icons.archive),
+//            IconButton(
+//              icon: Icon(Icons.settings),
+//              onPressed: () async {
+//                await _auth.signOut();
+//              },
+//            )
+//
+//          ],
         )
     );
   }

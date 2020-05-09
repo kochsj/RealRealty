@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../models/house.dart';
 
-GestureDetector customButton(BuildContext context, House house, double top, double left, [callback]) {
+GestureDetector customSearchViewHouseButton(BuildContext context, House house, double top, double left, [callback]) {
   return GestureDetector(
     onTap: () {
       callback(house);
@@ -17,6 +17,37 @@ GestureDetector customButton(BuildContext context, House house, double top, doub
           border: Border.all(color: Colors.black)
       ),
       child: Text(house.streetAddress),
+    ),
+  );
+}
+
+
+GestureDetector customListMenuButton(BuildContext context, String buttonText, double width, [IconData icon, Function callback]) {
+  if (icon == null) {
+    icon = Icons.arrow_forward_ios;
+  }
+
+  return GestureDetector(
+    onTap: () {
+      callback();
+//      Navigator.pushNamed(context, '/detail', arguments: ScreenArguments(house));
+    },
+    //custom button
+    child: Container(
+      width: width,
+      padding: EdgeInsets.all(12.0),
+      decoration: BoxDecoration(
+          color: Colors.orange,
+          borderRadius: BorderRadius.circular(8.0),
+          border: Border.all(color: Colors.black)
+      ),
+//      child: Text(buttonText),
+      child: Row(
+        children: <Widget>[
+          IconButton(icon: Icon(icon)),
+          Text(buttonText, style: TextStyle(fontSize: 36),),
+        ],
+      )
     ),
   );
 }
