@@ -35,7 +35,7 @@ GestureDetector customListMenuButton(BuildContext context, String buttonText, do
     //custom button
     child: Container(
       width: width,
-      padding: EdgeInsets.all(12.0),
+      padding: EdgeInsets.all(15.0),
       decoration: BoxDecoration(
           color: Colors.orange,
           borderRadius: BorderRadius.circular(8.0),
@@ -44,7 +44,8 @@ GestureDetector customListMenuButton(BuildContext context, String buttonText, do
 //      child: Text(buttonText),
       child: Row(
         children: <Widget>[
-          IconButton(icon: Icon(icon)),
+          Icon(icon),
+          Padding(padding: EdgeInsets.only(left: 12.0),),
           Text(buttonText, style: TextStyle(fontSize: 36),),
         ],
       )

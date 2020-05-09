@@ -96,25 +96,12 @@ class ProfileBody extends StatelessWidget {
         width: width,
         child: Column(
           children: <Widget>[
+            YourAgentRow(),
             customListMenuButton(context, "Preferences", width, Icons.account_circle),
             customListMenuButton(context, "Settings", width, Icons.settings),
             customListMenuButton(context, "My Documents", width, Icons.archive),
             customListMenuButton(context, "Sign Out", width, Icons.settings_power, signOut),
           ],
-//          children: <Widget>[
-//            YourAgentRow(),
-//            YourHomeRow(),
-//            ProfilePageButton("Preferences", Icons.account_circle),
-//            ProfilePageButton("Settings", Icons.settings),
-//            ProfilePageButton("My Documents", Icons.archive),
-//            IconButton(
-//              icon: Icon(Icons.settings),
-//              onPressed: () async {
-//                await _auth.signOut();
-//              },
-//            )
-//
-//          ],
         )
     );
   }
@@ -149,13 +136,40 @@ class YourAgentRow extends StatelessWidget {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
 
-    return Container(
-      width: width,
-      child : Row(
-        children: <Widget>[
-          IconButton(icon: Icon(Icons.email)),
-          Text("Sammantha Hill", style: TextStyle(fontSize: 36),),
-        ],
+    return GestureDetector(
+      onTap: () {
+//      TODO: agent route/view (?)
+        print("go to agent");
+//      Navigator.pushNamed(context, '/detail', arguments: ScreenArguments(house));
+      },
+      //custom button
+      child: Container(
+          width: width,
+          padding: EdgeInsets.all(15.0),
+          decoration: BoxDecoration(
+              color: Colors.orange,
+              borderRadius: BorderRadius.circular(8.0),
+              border: Border.all(color: Colors.black)
+          ),
+//      child: Text(buttonText),
+          child: Column(
+            children: <Widget>[
+              Row(
+                children: <Widget>[
+                  Icon(Icons.email),
+                  Padding(padding: EdgeInsets.only(left: 12.0),),
+                  Text("Your Agent", style: TextStyle(fontSize: 36),),
+
+                ],
+              ),
+              Row(
+                children: <Widget>[
+                  Padding(padding: EdgeInsets.only(left: 40.0),),
+                  // TODO: add real agent info
+                  Text("~ Samantha Hill - Real Realty", style: TextStyle(fontSize: 20.0),)
+                ],
+              ),
+            ],),
       ),
     );
   }
