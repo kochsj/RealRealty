@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:realtyapp/models/user.dart';
+import 'package:realtyapp/services/firestore_db.dart';
 
 class AuthService {
 
@@ -38,10 +39,11 @@ class AuthService {
 //  }
 
   //sign in with email/pw
-  Future signInEmail(String email, String password) async {
+  Future<User> signInEmail(String email, String password) async {
     try {
       AuthResult result = await _auth.signInWithEmailAndPassword(email: email, password: password);
       FirebaseUser _user = result.user;
+      DatabaseService(uid: _user.uid);
       return _userFromFirebaseUser(_user);
     } catch(e) {
       print(e.toString());
@@ -53,8 +55,12 @@ class AuthService {
   Future registerWithEmailAndPassword(String email, String password, String firstName, String lastName, String phoneNumber) async {
     try {
       AuthResult _result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
-      FirebaseUser _user = _result.user;
-      return _userFromFirebaseUser(_user, firstName, lastName, phoneNumber, email);
+      FirebaseUser _firebaseUser = _result.user;
+      User _user = _userFromFirebaseUser(_firebaseUser, firstName, lastName, phoneNumber, email);
+      // create document in firestore
+      await DatabaseService(uid: _user.uid).updateUserData(_user);
+
+      return _user;
     } catch(e) {
       print(e.toString());
       return null;

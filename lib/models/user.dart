@@ -59,3 +59,23 @@ class User {
   };
 
 }
+
+
+class UserData {
+  // from firebase
+  String uid;
+
+  // required to register
+  String firstName;
+  String lastName;
+  String phoneNumber;
+  String email;
+
+  // can be added in user's profile
+  House house;
+  Agent agent;
+  Image profilePicture;
+
+  UserData({this.uid, this.firstName, this.lastName, this.phoneNumber, this.email, this.house, this.agent, this.profilePicture});
+
+}

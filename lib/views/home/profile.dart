@@ -1,13 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:realtyapp/models/custom_nav_bar.dart';
 import 'package:realtyapp/models/custom_button.dart';
+import 'package:realtyapp/models/user.dart';
 import 'package:realtyapp/services/auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:provider/provider.dart';
+import 'package:realtyapp/services/firestore_db.dart';
+import 'package:realtyapp/shared_widgets/loading.dart';
 
 Text profileText() {
   return Text('Profile Page', style: TextStyle(fontSize: 36.0),  textWidthBasis: TextWidthBasis.longestLine,);
 }
 
 const AssetImage example = AssetImage("media/emoji.png");
+
+//class ProfilePage extends StatefulWidget {
+//  @override
+//  _ProfilePageState createState() => _ProfilePageState();
+//}
+//
+//class _ProfilePageState extends State<ProfilePage> {
+//
+//  @override
+//  Widget build(BuildContext context) {
+//    final user = Provider.of<QuerySnapshot>(context);
+//
+//    return Container(
+//
+//    );
+//  }
+//}
+
+
+
+
 
 
 class ProfilePage extends StatelessWidget {
@@ -17,21 +43,64 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String firstName = bloc.currentUser.firstName != null ? bloc.currentUser.firstName : '';
-    String lastName = bloc.currentUser.lastName != null ? bloc.currentUser.lastName : '';
-    String fullName = firstName + ' ' + lastName;
-    String phoneNumber = bloc.currentUser.phoneNumber != null ? bloc.currentUser.phoneNumber : '';
-    String emailAddress = bloc.currentUser.email != null ? bloc.currentUser.email : '';
+    final user = Provider.of<User>(context);
 
 
-    return Scaffold(
-      backgroundColor: Colors.amber,
-      body: ListView(
-        children: <Widget>[
-          ProfileHeader(example, fullName, phoneNumber, emailAddress),
-          ProfileBody(),
-        ],
-      ),
+    return StreamBuilder<UserData>(
+        stream: DatabaseService(uid: user.uid).userData,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            UserData ud = snapshot.data;
+            String fullName = ud.firstName + ' ' + ud.lastName;
+
+            return Scaffold(
+              backgroundColor: Colors.amber,
+              body: ListView(
+                children: <Widget>[
+                  ProfileHeader(example, fullName, ud.phoneNumber, ud.email),
+                  ProfileBody(),
+                ],
+              ),
+
+              bottomNavigationBar: MyCustomNavBar(),
+            );
+          } else {
+            return Scaffold(
+              backgroundColor: Colors.amber,
+              body: Container(
+                child: LoadingWidget(),
+              ),
+              bottomNavigationBar: MyCustomNavBar(),
+            );
+          }
+        }
+    );
+  }
+}
+
+//
+//        return Scaffold(
+//          backgroundColor: Colors.amber,
+//          body: ListView(
+//            children: <Widget>[
+//              ProfileHeader(example, fullName, phoneNumber, emailAddress),
+//              ProfileBody(),
+//            ],
+//          ),
+//
+//          bottomNavigationBar: MyCustomNavBar(),
+//        );
+//      }
+//
+//    );
+//    return Scaffold(
+//      backgroundColor: Colors.amber,
+//      body: ListView(
+//        children: <Widget>[
+//          ProfileHeader(example, fullName, phoneNumber, emailAddress),
+//          ProfileBody(),
+//        ],
+//      ),
 
 //      body: Column(
 //        children: <Widget>[
@@ -40,11 +109,10 @@ class ProfilePage extends StatelessWidget {
 //
 //        ],
 //      ),
-      bottomNavigationBar: MyCustomNavBar(),
-    );
-
-  }
-}
+//    );
+//
+//  }
+//}
 
 
 class ProfileHeader extends StatelessWidget {

@@ -76,7 +76,7 @@ class DBProvider {
   getUser(String uid) async {
     final db = await database;
     var res = await db.query("User", where: "uid = ?", whereArgs: [uid]);
-    return res.isNotEmpty ? User.fromMap(res.first) : Null ;
+    return res.isNotEmpty ? User.fromMap(res.first) : null ;
   }
 
   updateUser(User newUser) async {
