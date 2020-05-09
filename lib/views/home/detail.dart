@@ -16,19 +16,19 @@ class ScreenArguments {
   ScreenArguments(this.houseData);
 }
 
-class DetailPage extends StatefulWidget {
-  @override
-  DetailState createState() {
-    return DetailState();
-  }
-}
-
-class DetailState extends State<DetailPage> {
-  bool _isFavorite = false;
-  List<House> _houses = [];
-
-
-  DetailViewFavoriteButton _favoriteButton;
+//class DetailPage extends StatefulWidget {
+//  @override
+//  DetailState createState() {
+//    return DetailState();
+//  }
+//}
+//
+//class DetailState extends State<DetailPage> {
+//  bool _isFavorite = false;
+//  List<House> _houses = [];
+//
+//
+//  DetailViewFavoriteButton _favoriteButton;
 
 //  void toggleFavorite(args, bool fav) {
 //    setState(() {
@@ -39,6 +39,9 @@ class DetailState extends State<DetailPage> {
 //          DetailViewFavoriteButton(args, Colors.red, toggleFavorite);
 //    });
 //  }
+class DetailPage extends StatelessWidget {
+//  bool _isFavorite = false;
+//  DetailViewFavoriteButton _favoriteButton;
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +58,7 @@ class DetailState extends State<DetailPage> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             print("snapshot has data: ${snapshot.data}");
-            _houses = snapshot.data;
+            List<House> _houses = snapshot.data;
             return DetailView(args.houseData, _houses);
           } else {
             print("no snapshot data");
@@ -66,37 +69,39 @@ class DetailState extends State<DetailPage> {
   }
 }
     
-
-class DetailView extends StatelessWidget {
+class DetailView extends StatefulWidget {
   final houseData;
   final listOfFavoriteHouses;
   DetailView(this.houseData, this.listOfFavoriteHouses);
-  
+
+  @override
+  _DetailViewState createState() => _DetailViewState();
+}
+
+class _DetailViewState extends State<DetailView> {
+
+
   bool _isFavorite = false;
   Widget _favoriteButton;
 
   void toggleFavorite(args, bool fav) {
     print("added/removed from favorites!");
-
   }
-  
+
   @override
   Widget build(BuildContext context) {
-    _favoriteButton = _isFavorite ? DetailViewFavoriteButton(houseData, Colors.red, toggleFavorite) : _favoriteButton = DetailViewFavoriteButton(houseData, Colors.transparent, toggleFavorite);
-
-
-
+    _favoriteButton = _isFavorite ? DetailViewFavoriteButton(widget.houseData, Colors.red, toggleFavorite) : _favoriteButton = DetailViewFavoriteButton(widget.houseData, Colors.transparent, toggleFavorite);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(houseData.streetAddress),
+        title: Text(widget.houseData.streetAddress),
       ),
       body: Center(
         child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               _favoriteButton,
-              Text(houseData.streetAddress, style: TextStyle(fontSize: 28.0)),
+              Text(widget.houseData.streetAddress, style: TextStyle(fontSize: 28.0)),
               Text('here are some details'),
               Text('sq.ft, bedrooms, bathrooms, etc...'),
             ]
