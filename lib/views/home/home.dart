@@ -12,9 +12,6 @@ import 'package:provider/provider.dart';
 
 
 class Home extends StatelessWidget {
-  final bloc;
-  Home(this.bloc);
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -22,11 +19,11 @@ class Home extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.orange,
       ),
-      home: SearchView(bloc),
+      home: SearchView(),
       initialRoute: '/',
       routes: {
-        '/favorites': (context) => FavoritesPage(bloc),
-        '/profile': (context) => ProfilePage(bloc),
+        '/favorites': (context) => FavoritesPage(),
+        '/profile': (context) => ProfilePage(),
         '/chat': (context) => ChatPage(),
         '/more': (context) => MorePage(),
         '/detail': (context) => DetailPage(),

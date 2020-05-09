@@ -7,13 +7,9 @@ import 'detail.dart';
 
 
 class SearchView extends StatefulWidget {
-  final bloc;
-  SearchView(this.bloc);
-
   @override
   SearchState createState() {
-    return SearchState(bloc);
-//    return SearchState();
+    return SearchState();
   }
 }
 
@@ -24,16 +20,11 @@ class SearchState extends State<SearchView> {
     House(streetAddress: '701 Stewart St', state: 'WA', city: 'Woodinville', zipCode: '98073'),
   ];
 
-  final bloc;
-
-  SearchState(this.bloc);
-
-
 
   void _changeToDetailView(House houseToView) {
 //    Navigator.pushNamed(context, '/detail',);
 
-    Navigator.pushNamed(context, '/detail', arguments: ScreenArguments(houseToView, bloc));
+    Navigator.pushNamed(context, '/detail', arguments: ScreenArguments(houseToView));
   }
 
   @override

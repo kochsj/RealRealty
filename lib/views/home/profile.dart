@@ -14,37 +14,10 @@ Text profileText() {
 
 const AssetImage example = AssetImage("media/emoji.png");
 
-//class ProfilePage extends StatefulWidget {
-//  @override
-//  _ProfilePageState createState() => _ProfilePageState();
-//}
-//
-//class _ProfilePageState extends State<ProfilePage> {
-//
-//  @override
-//  Widget build(BuildContext context) {
-//    final user = Provider.of<QuerySnapshot>(context);
-//
-//    return Container(
-//
-//    );
-//  }
-//}
-
-
-
-
-
-
 class ProfilePage extends StatelessWidget {
-  final bloc;
-
-  ProfilePage(this.bloc);
-
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
-
 
     return StreamBuilder<UserData>(
         stream: DatabaseService(uid: user.uid).userData,
@@ -77,43 +50,6 @@ class ProfilePage extends StatelessWidget {
     );
   }
 }
-
-//
-//        return Scaffold(
-//          backgroundColor: Colors.amber,
-//          body: ListView(
-//            children: <Widget>[
-//              ProfileHeader(example, fullName, phoneNumber, emailAddress),
-//              ProfileBody(),
-//            ],
-//          ),
-//
-//          bottomNavigationBar: MyCustomNavBar(),
-//        );
-//      }
-//
-//    );
-//    return Scaffold(
-//      backgroundColor: Colors.amber,
-//      body: ListView(
-//        children: <Widget>[
-//          ProfileHeader(example, fullName, phoneNumber, emailAddress),
-//          ProfileBody(),
-//        ],
-//      ),
-
-//      body: Column(
-//        children: <Widget>[
-//          ProfileHeader(profilePic, fullName, phoneNumber, emailAddress),
-//          ProfileBody(),
-//
-//        ],
-//      ),
-//    );
-//
-//  }
-//}
-
 
 class ProfileHeader extends StatelessWidget {
   final AuthService _auth = AuthService();

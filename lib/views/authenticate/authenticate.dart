@@ -4,10 +4,6 @@ import 'package:realtyapp/views/authenticate/sign_in.dart';
 
 
 class Authenticate extends StatefulWidget {
-  final bloc;
-
-  Authenticate(this.bloc);
-
   @override
   State<StatefulWidget> createState() {
     return _AuthenticateState();
@@ -20,10 +16,10 @@ class _AuthenticateState extends State<Authenticate> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: SignIn(widget.bloc),
+      home: SignIn(),
       initialRoute: '/',
       routes: {
-        '/register': (context) => Register(widget.bloc),
+        '/register': (context) => Register(),
       },
     );
 

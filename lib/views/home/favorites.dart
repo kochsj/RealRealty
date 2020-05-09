@@ -9,47 +9,16 @@ Text favoritesText() {
 
 
 class FavoritesPage extends StatefulWidget {
-  final bloc;
-  FavoritesPage(this.bloc);
-
   @override
   FavoritesState createState() {
-    return FavoritesState(bloc, Center(child: CircularProgressIndicator()));
+    return FavoritesState();
 //    return FavoritesState(Center(child: CircularProgressIndicator()));
   }
 }
 
 class FavoritesState extends State<FavoritesPage> {
-  final bloc;
-  Widget _view;
-  FavoritesState(this.bloc, this._view);
-//  FavoritesState(this._view);
 
-  @override
-  void initState() {
-    _view = Center(child: CircularProgressIndicator());
-
-    _checkDB();
-  }
-
-  void _removeFromDB(int id) async {
-    await bloc.deleteHouse(id);
-    await bloc.getHouses();
-
-    List<House> _clients = bloc.houses;
-
-    setState(() {
-      _view = FavoritesPageItemWidget(_clients, _removeFromDB);
-    });
-  }
-
-  void _checkDB() async {
-    List<House> _clients = bloc.houses != null ? bloc.houses : [];
-
-    setState(() {
-      _view = FavoritesPageItemWidget(_clients, _removeFromDB);
-    });
-  }
+  Widget _view = Center(child: CircularProgressIndicator());
 
   @override
   Widget build(BuildContext context) {
@@ -58,13 +27,6 @@ class FavoritesState extends State<FavoritesPage> {
         title: Text('Favorites', style: TextStyle(fontSize: 28.0)),
       ),
       body: _view,
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () async {
-          DBProvider.db.deleteAll();
-          setState(() {});
-        },
-      ),
       bottomNavigationBar: MyCustomNavBar(),
     );
   }

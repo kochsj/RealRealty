@@ -5,21 +5,16 @@ import 'package:realtyapp/models/user.dart';
 import 'package:realtyapp/views/home/home.dart';
 
 class Wrapper extends StatelessWidget {
-  final bloc;
-
-  Wrapper(this.bloc);
-
   @override
   Widget build(BuildContext context) {
 
     final _user = Provider.of<User>(context);
 
     // return home or auth widget
-
     if (_user == null) {
-      return Authenticate(bloc);
+      return Authenticate();
     } else {
-      return Home(bloc);
+      return Home();
     }
 
   }

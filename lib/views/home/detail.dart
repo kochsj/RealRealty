@@ -7,9 +7,8 @@ Text detailText() {
 }
 
 class ScreenArguments {
-  final House houseInfo;
-  final bloc;
-  ScreenArguments(this.houseInfo, this.bloc);
+  final House houseData;
+  ScreenArguments(this.houseData);
 }
 
 class DetailPage extends StatefulWidget {
@@ -38,26 +37,27 @@ class DetailState extends State<DetailPage> {
   Widget build(BuildContext context) {
     final ScreenArguments args = ModalRoute.of(context).settings.arguments;
 
-    for (House house in args.bloc.houses) {
-      if (house.streetAddress == args.houseInfo.streetAddress) {
-        setState(() {
-          _isFavorite = true;
-        });
-      }
-    }
+//    TODO: check firestore allFavorites
+//    for (House house in args.bloc.houses) {
+//      if (house.streetAddress == args.houseData.streetAddress) {
+//        setState(() {
+//          _isFavorite = true;
+//        });
+//      }
+//    }
 
     _favoriteButton = _isFavorite ? DetailViewFavoriteButton(args, Colors.red, toggleFavorite) : _favoriteButton = DetailViewFavoriteButton(args, Colors.transparent, toggleFavorite);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(args.houseInfo.streetAddress),
+        title: Text(args.houseData.streetAddress),
       ),
       body: Center(
         child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               _favoriteButton,
-              Text(args.houseInfo.streetAddress, style: TextStyle(fontSize: 28.0)),
+              Text(args.houseData.streetAddress, style: TextStyle(fontSize: 28.0)),
               Text('here are some details'),
               Text('sq.ft, bedrooms, bathrooms, etc...'),
             ]
@@ -86,7 +86,7 @@ class DetailViewFavoriteButton extends StatelessWidget {
       child: new Builder(builder: (thisContext) {
         return new FloatingActionButton.extended(onPressed: () async {
           for (House c in args.bloc.houses) {
-            if (c.streetAddress == args.houseInfo.streetAddress) {
+            if (c.streetAddress == args.houseData.streetAddress) {
               Scaffold.of(thisContext).showSnackBar(
                   new SnackBar(
                       content: new Text("Removed from Favorites.", style: TextStyle(fontSize: 24.0),))
@@ -100,7 +100,7 @@ class DetailViewFavoriteButton extends StatelessWidget {
               new SnackBar(
                   content: new Text("Added to Favorites!", style: TextStyle(fontSize: 24.0),))
           );
-          await args.bloc.addHouse(args.houseInfo);
+          await args.bloc.addHouse(args.houseData);
 
           _callback(args, true);
         },
