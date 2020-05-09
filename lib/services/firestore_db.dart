@@ -89,20 +89,25 @@ class FavoritesDatabaseService {
       "beds": house.beds,
       "baths": house.baths,
     });
+  }
 
+  Future deleteUsersFavoriteHouse(House house) async {
+    final CollectionReference userFavoritesCollection = Firestore.instance.collection('users').document(uid).collection('favorites');
+    try {
+      return await userFavoritesCollection.document(house.zpid).delete();
+    } catch(e) {
+      print(e.toString());
+    }
   }
 
   //user data from document snapshot
    List<House>_houseFromSnapshot(QuerySnapshot snapshot) {
-//    print("making user data...");
-    List<House> houses = [];
-
-    for(var house in snapshot.documents) {
-      House temp = House(zpid: house.data["zpid"], streetAddress: house.data["street_address"], city: house.data["city"], state: house.data["state"], zipCode: house.data["zip_code"], photoURL: house.data["photo_url"], beds: house.data["beds"], baths: house.data["baths"],);
-      houses.add(temp);
-    }
-
-    return houses;
+      List<House> houses = [];
+      for(var house in snapshot.documents) {
+        House temp = House(zpid: house.data["zpid"], streetAddress: house.data["street_address"], city: house.data["city"], state: house.data["state"], zipCode: house.data["zip_code"], photoURL: house.data["photo_url"], beds: house.data["beds"], baths: house.data["baths"],);
+        houses.add(temp);
+      }
+      return houses;
   }
 
   // get user stream
@@ -112,10 +117,5 @@ class FavoritesDatabaseService {
       .map(_houseFromSnapshot);
   }
 
-//  // get individual user doc stream
-//  Stream<House> get houseData {
-//    print("getting userdata from firestore.... from : $uid");
-//    return userCollection.document(uid).snapshots()
-//        .map(_userDataFromSnapshot);
-//  }
+
 }

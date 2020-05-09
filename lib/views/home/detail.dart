@@ -12,37 +12,11 @@ Text detailText() {
 }
 
 class ScreenArguments {
-  final House houseData;
-  ScreenArguments(this.houseData);
+  final House houseBeingViewed;
+  ScreenArguments(this.houseBeingViewed);
 }
 
-//class DetailPage extends StatefulWidget {
-//  @override
-//  DetailState createState() {
-//    return DetailState();
-//  }
-//}
-//
-//class DetailState extends State<DetailPage> {
-//  bool _isFavorite = false;
-//  List<House> _houses = [];
-//
-//
-//  DetailViewFavoriteButton _favoriteButton;
-
-//  void toggleFavorite(args, bool fav) {
-//    setState(() {
-//      _isFavorite = fav;
-//      _favoriteButton = fav
-//          ? DetailViewFavoriteButton(args, Colors.transparent, toggleFavorite)
-//          : _favoriteButton =
-//          DetailViewFavoriteButton(args, Colors.red, toggleFavorite);
-//    });
-//  }
 class DetailPage extends StatelessWidget {
-//  bool _isFavorite = false;
-//  DetailViewFavoriteButton _favoriteButton;
-
   @override
   Widget build(BuildContext context) {
     final ScreenArguments args = ModalRoute
@@ -52,17 +26,14 @@ class DetailPage extends StatelessWidget {
 
     final user = Provider.of<User>(context);
 
-
     return StreamBuilder<List<House>>(
         stream: FavoritesDatabaseService(uid: user.uid).favoriteHouses,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            print("snapshot has data: ${snapshot.data}");
             List<House> _houses = snapshot.data;
-            return DetailView(args.houseData, _houses);
+            return DetailView(user, args.houseBeingViewed, _houses);
           } else {
-            print("no snapshot data");
-            return DetailView(args.houseData, []);
+            return DetailView(user, args.houseBeingViewed, []);
           }
         }
     );
@@ -70,9 +41,10 @@ class DetailPage extends StatelessWidget {
 }
     
 class DetailView extends StatefulWidget {
-  final houseData;
+  final houseBeingViewed;
   final listOfFavoriteHouses;
-  DetailView(this.houseData, this.listOfFavoriteHouses);
+  final user;
+  DetailView(this.user, this.houseBeingViewed, this.listOfFavoriteHouses);
 
   @override
   _DetailViewState createState() => _DetailViewState();
@@ -80,28 +52,43 @@ class DetailView extends StatefulWidget {
 
 class _DetailViewState extends State<DetailView> {
 
-
   bool _isFavorite = false;
   Widget _favoriteButton;
 
-  void toggleFavorite(args, bool fav) {
+  void toggleFavorite(bool isFavorite) async {
+    if(isFavorite){
+      await FavoritesDatabaseService(uid: widget.user.uid).deleteUsersFavoriteHouse(widget.houseBeingViewed);
+      setState(() {
+        _isFavorite = false;
+      });
+    } else {
+      await FavoritesDatabaseService(uid: widget.user.uid).updateUsersFavoritesData(widget.houseBeingViewed);
+    }
+
     print("added/removed from favorites!");
   }
 
   @override
   Widget build(BuildContext context) {
-    _favoriteButton = _isFavorite ? DetailViewFavoriteButton(widget.houseData, Colors.red, toggleFavorite) : _favoriteButton = DetailViewFavoriteButton(widget.houseData, Colors.transparent, toggleFavorite);
+    // find out if the selected house is a favorite already
+    for(House houseFromDB in widget.listOfFavoriteHouses) {
+      if(houseFromDB.zpid == widget.houseBeingViewed.zpid) {
+        _isFavorite = true;
+      }
+    }
+
+    _favoriteButton = _isFavorite ? DetailViewFavoriteButton(_isFavorite, Colors.red, toggleFavorite) : _favoriteButton = DetailViewFavoriteButton(_isFavorite, Colors.transparent, toggleFavorite);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.houseData.streetAddress),
+        title: Text(widget.houseBeingViewed.streetAddress),
       ),
       body: Center(
         child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               _favoriteButton,
-              Text(widget.houseData.streetAddress, style: TextStyle(fontSize: 28.0)),
+              Text(widget.houseBeingViewed.streetAddress, style: TextStyle(fontSize: 28.0)),
               Text('here are some details'),
               Text('sq.ft, bedrooms, bathrooms, etc...'),
             ]
@@ -114,26 +101,31 @@ class _DetailViewState extends State<DetailView> {
 
 
 class DetailViewFavoriteButton extends StatelessWidget {
-  final _houseData;
+  final bool _isFavorite;
   final Color _color;
   final Function _callback;
 
-  DetailViewFavoriteButton(this._houseData, this._color, this._callback);
+  DetailViewFavoriteButton(this._isFavorite, this._color, this._callback);
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<User>(context);
 
     return Padding(
       padding: EdgeInsets.only(top: 70.0),
       child: new Builder(builder: (thisContext) {
         return new FloatingActionButton.extended(onPressed: () async {
-          Scaffold.of(thisContext).showSnackBar(
-              new SnackBar(
-                  content: new Text("Added to Favorites!", style: TextStyle(fontSize: 24.0),))
-          );
-          await FavoritesDatabaseService(uid: user.uid).updateUsersFavoritesData(_houseData);
-
+          if(_isFavorite) {
+            Scaffold.of(thisContext).showSnackBar(
+                new SnackBar(
+                    content: new Text("Removed from Favorites", style: TextStyle(fontSize: 24.0),))
+            );
+          } else {
+            Scaffold.of(thisContext).showSnackBar(
+                new SnackBar(
+                    content: new Text("Added to Favorites!", style: TextStyle(fontSize: 24.0),))
+            );
+          }
+          _callback(_isFavorite);
         },
           label: Text('Add to favorites!'),
           icon: Icon(Icons.favorite),
