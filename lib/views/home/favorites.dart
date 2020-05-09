@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:realtyapp/models/house_model.dart';
-import 'package:realtyapp/models/custom_nav_bar.dart';
-import 'package:realtyapp/models/database.dart';
+import 'package:realtyapp/models/house.dart';
+import 'package:realtyapp/shared_widgets/custom_nav_bar.dart';
+import 'package:realtyapp/services/local_db.dart';
 
 Text favoritesText() {
   return Text('My Favorites Page', style: TextStyle(fontSize: 36.0),  textWidthBasis: TextWidthBasis.longestLine,);

@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:realtyapp/models/agent.dart';
-import 'package:realtyapp/models/house_model.dart';
+import 'package:realtyapp/models/house.dart';
 
 
 House clientFromJson(String str) {

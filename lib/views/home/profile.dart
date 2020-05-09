@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:realtyapp/models/custom_nav_bar.dart';
-import 'package:realtyapp/models/custom_button.dart';
+import 'package:realtyapp/shared_widgets/custom_nav_bar.dart';
+import 'package:realtyapp/shared_widgets/custom_button.dart';
 import 'package:realtyapp/models/user.dart';
 import 'package:realtyapp/services/auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:realtyapp/models/custom_nav_bar.dart';
+import 'package:realtyapp/shared_widgets/custom_nav_bar.dart';
 
 
 Text chatText(){

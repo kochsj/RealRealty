@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'house_model.dart';
+import '../models/house.dart';
 
 GestureDetector customButton(BuildContext context, House house, double top, double left, [callback]) {
   return GestureDetector(

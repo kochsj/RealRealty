@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:realtyapp/models/house_model.dart';
+import 'package:realtyapp/models/house.dart';
 
 
 Text detailText() {
