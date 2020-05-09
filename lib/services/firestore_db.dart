@@ -93,7 +93,7 @@ class FavoritesDatabaseService {
   }
 
   //user data from document snapshot
-   _houseFromSnapshot(QuerySnapshot snapshot) {
+   List<House>_houseFromSnapshot(QuerySnapshot snapshot) {
 //    print("making user data...");
     List<House> houses = [];
 
