@@ -55,13 +55,11 @@ class DetailState extends State<DetailPage> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             print("snapshot has data: ${snapshot.data}");
-            setState(() {
-              _houses = snapshot.data;
-            });
-            return DetailView(_houses);
+            _houses = snapshot.data;
+            return DetailView(args.houseData, _houses);
           } else {
             print("no snapshot data");
-            return DetailView(args.houseData);
+            return DetailView(args.houseData, []);
           }
         }
     );
@@ -71,7 +69,8 @@ class DetailState extends State<DetailPage> {
 
 class DetailView extends StatelessWidget {
   final houseData;
-  DetailView(this.houseData);
+  final listOfFavoriteHouses;
+  DetailView(this.houseData, this.listOfFavoriteHouses);
   
   bool _isFavorite = false;
   Widget _favoriteButton;

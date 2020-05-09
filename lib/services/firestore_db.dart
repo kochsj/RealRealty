@@ -81,7 +81,7 @@ class FavoritesDatabaseService {
 
     return await userFavoritesCollection.document(house.zpid).setData({
       "zpid": house.zpid,
-      "streetAddress": house.streetAddress,
+      "street_address": house.streetAddress,
       "city": house.city,
       "state": house.state,
       "zip_code": house.zipCode,
@@ -107,8 +107,8 @@ class FavoritesDatabaseService {
 
   // get user stream
   Stream<List<House>> get favoriteHouses {
-    final CollectionReference userCollection = Firestore.instance.collection('$uid/favorites');
-    return userCollection.snapshots()
+    final CollectionReference userFavoritesCollection = Firestore.instance.collection('users').document(uid).collection('favorites');
+    return userFavoritesCollection.snapshots()
       .map(_houseFromSnapshot);
   }
 
