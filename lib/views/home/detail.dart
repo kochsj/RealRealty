@@ -118,6 +118,8 @@ class DetailViewFavoriteButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<User>(context);
+
     return Padding(
       padding: EdgeInsets.only(top: 70.0),
       child: new Builder(builder: (thisContext) {
@@ -126,6 +128,8 @@ class DetailViewFavoriteButton extends StatelessWidget {
               new SnackBar(
                   content: new Text("Added to Favorites!", style: TextStyle(fontSize: 24.0),))
           );
+          await FavoritesDatabaseService(uid: user.uid).updateUsersFavoritesData(_houseData);
+
         },
           label: Text('Add to favorites!'),
           icon: Icon(Icons.favorite),

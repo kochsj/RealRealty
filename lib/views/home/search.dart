@@ -15,9 +15,9 @@ class SearchView extends StatefulWidget {
 
 class SearchState extends State<SearchView> {
   final listOfHouses = [
-    House(streetAddress: '123 Main St', state: 'WA', city: 'Woodinville', zipCode: '98072'),
-    House(streetAddress: '54 Park Ave', state: 'WA', city: 'Woodinville', zipCode: '98071'),
-    House(streetAddress: '701 Stewart St', state: 'WA', city: 'Woodinville', zipCode: '98073'),
+    House(streetAddress: '123 Main St', state: 'WA', city: 'Woodinville', zipCode: '98072', zpid: "1234567890"),
+    House(streetAddress: '54 Park Ave', state: 'WA', city: 'Woodinville', zipCode: '98071', zpid: "0987654321"),
+    House(streetAddress: '701 Stewart St', state: 'WA', city: 'Woodinville', zipCode: '98073', zpid: "10293948576"),
   ];
 
 

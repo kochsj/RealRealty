@@ -74,13 +74,12 @@ class FavoritesDatabaseService {
   final String uid;
   FavoritesDatabaseService({this.uid});
 
-  // collection reference
-//  final CollectionReference userCollection = Firestore.instance.collection('favorites');
 
-  Future updateFavoritesData(House house) async {
-    final CollectionReference userCollection = Firestore.instance.collection('$uid/favorites');
+  Future updateUsersFavoritesData(House house) async {
+    // collection reference
+    final CollectionReference userFavoritesCollection = Firestore.instance.collection('users').document(uid).collection('favorites');
 
-    return await userCollection.document(house.zpid).setData({
+    return await userFavoritesCollection.document(house.zpid).setData({
       "zpid": house.zpid,
       "streetAddress": house.streetAddress,
       "city": house.city,
@@ -90,6 +89,7 @@ class FavoritesDatabaseService {
       "beds": house.beds,
       "baths": house.baths,
     });
+
   }
 
   //user data from document snapshot
