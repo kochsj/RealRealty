@@ -17,28 +17,6 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<QuerySnapshot>.value(
-      value: DatabaseService().user,
-      child: MaterialApp(
-        title: 'Movil Realty',
-        theme: ThemeData(
-          primarySwatch: Colors.orange,
-        ),
-        home: SearchView(bloc),
-        initialRoute: '/',
-        routes: {
-          '/favorites': (context) => FavoritesPage(bloc),
-          '/profile': (context) => ProfilePage(bloc),
-          '/chat': (context) => ChatPage(),
-          '/more': (context) => MorePage(),
-          '/detail': (context) => DetailPage(),
-        },
-      ),
-    );
-
-
-
-
     return MaterialApp(
       title: 'Movil Realty',
       theme: ThemeData(

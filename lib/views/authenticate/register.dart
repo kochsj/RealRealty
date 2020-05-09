@@ -125,7 +125,7 @@ class _RegisterState extends State<Register> {
                           _error = "Could not sign in with these credentials";
                         });
                       }
-                      // TODO: add user to db
+
                       await widget.bloc.addUser(result);
                       User _user = await widget.bloc.getUser(result.uid);
                       print("this is the user(?)");
