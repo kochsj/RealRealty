@@ -106,7 +106,7 @@ class FavoritesDatabaseService {
   }
 
   // get user stream
-  Stream<House> get houses {
+  Stream<List<House>> get favoriteHouses {
     final CollectionReference userCollection = Firestore.instance.collection('$uid/favorites');
     return userCollection.snapshots()
       .map(_houseFromSnapshot);

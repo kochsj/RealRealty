@@ -85,7 +85,7 @@ class DetailViewFavoriteButton extends StatelessWidget {
       padding: EdgeInsets.only(top: 70.0),
       child: new Builder(builder: (thisContext) {
         return new FloatingActionButton.extended(onPressed: () async {
-          for (House c in args.bloc.houses) {
+          for (House c in args.bloc.favoriteHouses) {
             if (c.streetAddress == args.houseData.streetAddress) {
               Scaffold.of(thisContext).showSnackBar(
                   new SnackBar(
