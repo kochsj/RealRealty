@@ -20,7 +20,7 @@ class ProfilePage extends StatelessWidget {
     final user = Provider.of<User>(context);
 
     return StreamBuilder<UserData>(
-        stream: DatabaseService(uid: user.uid).userData,
+        stream: UserDatabaseService(uid: user.uid).userData,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             UserData ud = snapshot.data;

@@ -43,7 +43,7 @@ class AuthService {
     try {
       AuthResult result = await _auth.signInWithEmailAndPassword(email: email, password: password);
       FirebaseUser _user = result.user;
-      DatabaseService(uid: _user.uid);
+      UserDatabaseService(uid: _user.uid);
       return _userFromFirebaseUser(_user);
     } catch(e) {
       print(e.toString());
@@ -58,7 +58,7 @@ class AuthService {
       FirebaseUser _firebaseUser = _result.user;
       User _user = _userFromFirebaseUser(_firebaseUser, firstName, lastName, phoneNumber, email);
       // create document in firestore
-      await DatabaseService(uid: _user.uid).updateUserData(_user);
+      await UserDatabaseService(uid: _user.uid).updateUserData(_user);
 
       return _user;
     } catch(e) {
