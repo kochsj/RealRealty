@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:realtyapp/models/house.dart';
 import 'package:realtyapp/shared_widgets/custom_nav_bar.dart';
 import 'package:realtyapp/shared_widgets/custom_button.dart';
 import 'package:realtyapp/models/user.dart';
 import 'package:realtyapp/services/auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 import 'package:realtyapp/services/firestore_db.dart';
 import 'package:realtyapp/shared_widgets/loading.dart';
@@ -23,15 +23,15 @@ class ProfilePage extends StatelessWidget {
         stream: UserDatabaseService(uid: user.uid).userData,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            UserData ud = snapshot.data;
-            String fullName = ud.firstName + ' ' + ud.lastName;
+            UserData userData = snapshot.data;
+
 
             return Scaffold(
               backgroundColor: Colors.amber,
               body: ListView(
                 children: <Widget>[
-                  ProfileHeader(fullName, ud.phoneNumber, ud.email),
-                  ProfileBody(),
+                  ProfileHeader(userData),
+                  ProfileBody(userData),
                 ],
               ),
 
@@ -53,22 +53,24 @@ class ProfilePage extends StatelessWidget {
 
 class ProfileHeader extends StatelessWidget {
 
-  final String fullName;
-  final String phoneNumber;
-  final String emailAddress;
-  final AssetImage profilePic;
+  final UserData _userData;
 
-  ProfileHeader(this.fullName, this.phoneNumber, this.emailAddress, [this.profilePic]);
+  ProfileHeader(this._userData);
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
+
+    String fullName = _userData.firstName + ' ' + _userData.lastName;
+    String phoneNumber = _userData.phoneNumber;
+    String emailAddress = _userData.email;
+
     AssetImage _profilePic;
 
-    if(profilePic == null) {
+    if(_userData.profilePicture == null) {
       _profilePic = example;
     } else {
-      _profilePic = profilePic;
+      _profilePic = _userData.profilePicture;
     }
 
     return Container(
@@ -88,26 +90,39 @@ class ProfileHeader extends StatelessWidget {
 }
 
 class ProfileBody extends StatelessWidget {
-  final AuthService _auth = AuthService();
 
-  void signOut() async {
-    await _auth.signOut();
+  final UserData _userData;
+
+  ProfileBody(this._userData);
+
+  void _signOut() async {
+    await AuthService().signOut();
   }
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
 
+    Widget usersHomeRow;
+
+    if(_userData.house == null) {
+      usersHomeRow = Container();
+    } else {
+// TODO: how to store a user's house in the DB?
+      usersHomeRow = UsersHomeRow(_userData.house);
+    }
+
     return Container(
         color: Colors.amber,
         width: width,
         child: Column(
           children: <Widget>[
-            YourAgentRow(),
+            UsersAgentRow(),
+            usersHomeRow,
             customListMenuButton(context, "Preferences", width, Icons.account_circle),
             customListMenuButton(context, "Settings", width, Icons.settings),
             customListMenuButton(context, "My Documents", width, Icons.archive),
-            customListMenuButton(context, "Sign Out", width, Icons.settings_power, signOut),
+            customListMenuButton(context, "Sign Out", width, Icons.settings_power, _signOut),
           ],
         )
     );
@@ -138,7 +153,7 @@ class ProfileImage extends StatelessWidget {
   }
 }
 
-class YourAgentRow extends StatelessWidget {
+class UsersAgentRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -182,7 +197,12 @@ class YourAgentRow extends StatelessWidget {
   }
 }
 
-class YourHomeRow extends StatelessWidget {
+class UsersHomeRow extends StatelessWidget {
+  final House usersHouse;
+  UsersHomeRow(this.usersHouse);
+
+//  TODO: Populate with your current home info
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -192,7 +212,7 @@ class YourHomeRow extends StatelessWidget {
       child: Row(
         children: <Widget>[
           Text("Your Home:"),
-          IconButton(icon: Icon(Icons.home)),
+          Icon(Icons.home),
           Text("123 Main Street")
         ],
       ),
@@ -200,28 +220,3 @@ class YourHomeRow extends StatelessWidget {
   }
 }
 
-class ProfilePageButton extends StatelessWidget {
-  final String buttonText;
-  final IconData icon;
-
-  ProfilePageButton(this.buttonText, this.icon);
-
-  @override
-  Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-
-    return Container(
-        width: width,
-        padding: EdgeInsets.only(left: 10.0, top: 25.0, bottom: 25.0),
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.black),
-        ),
-        child: Row(
-          children: <Widget>[
-            IconButton(icon: Icon(icon)),
-            Text(buttonText, style: TextStyle(fontSize: 36),),
-          ],
-        )
-    );
-  }
-}

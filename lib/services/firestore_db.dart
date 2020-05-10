@@ -39,7 +39,7 @@ class UserDatabaseService {
 
   // get individual user doc stream
   Stream<UserData> get userData {
-    print("getting userdata from firestore.... from : $uid");
+//    print("getting userdata from firestore.... from : $uid");
     return userCollection.document(uid).snapshots()
       .map(_userDataFromSnapshot);
   }
@@ -110,7 +110,7 @@ class FavoritesDatabaseService {
       return houses;
   }
 
-  // get user stream
+  // get individual users favorite houses stream
   Stream<List<House>> get favoriteHouses {
     final CollectionReference userFavoritesCollection = Firestore.instance.collection('users').document(uid).collection('favorites');
     return userFavoritesCollection.snapshots()

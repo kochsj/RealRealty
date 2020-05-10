@@ -74,7 +74,7 @@ class UserData {
   // can be added in user's profile
   House house;
   Agent agent;
-  Image profilePicture;
+  AssetImage profilePicture;
 
   UserData({this.uid, this.firstName, this.lastName, this.phoneNumber, this.email, this.house, this.agent, this.profilePicture});
 
