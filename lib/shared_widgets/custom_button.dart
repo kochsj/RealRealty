@@ -27,6 +27,10 @@ GestureDetector customListMenuButton(BuildContext context, String buttonText, do
     icon = Icons.arrow_forward_ios;
   }
 
+  if (callback == null) {
+    callback = () => print("Going to $buttonText....");
+  }
+
   return GestureDetector(
     onTap: () {
       callback();
