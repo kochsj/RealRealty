@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:realtyapp/models/agent.dart';
 import 'package:realtyapp/models/house.dart';
@@ -10,6 +12,16 @@ class UserDatabaseService {
   // collection reference
   final CollectionReference userCollection = Firestore.instance.collection('users');
 
+  Agent agentFromJson(String str) {
+    final jsonData = json.decode(str);
+    return Agent.fromMap(jsonData);
+  }
+
+  String agentToJson(Agent agent) {
+    final dyn = agent.toMap();
+    return json.encode(dyn);
+  }
+
   Future updateUserData(User user) async {
     return await userCollection.document(uid).setData({
       "first_name": user.firstName,
@@ -17,7 +29,7 @@ class UserDatabaseService {
       "phone_number": user.phoneNumber,
       "email": user.email,
       "house": user.house,
-      "agent": user.agent,
+      "agent": agentToJson(user.agent),
       "profile_picture": user.profilePicture,
     });
   }
@@ -32,14 +44,14 @@ class UserDatabaseService {
       phoneNumber: snapshot.data['phone_number'],
       email: snapshot.data['email'],
       house: snapshot.data['house'],
-      agent: snapshot.data['agent'],
+      agent: snapshot.data['agent'] != null ? agentFromJson(snapshot.data['agent']) : null,
       profilePicture: snapshot.data['profile_picture'],
     );
   }
 
   // get individual user doc stream
   Stream<UserData> get userData {
-//    print("getting userdata from firestore.... from : $uid");
+    print("getting userdata from firestore.... from : $uid");
     return userCollection.document(uid).snapshots()
       .map(_userDataFromSnapshot);
   }

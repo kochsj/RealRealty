@@ -23,6 +23,7 @@ class ProfilePage extends StatelessWidget {
         stream: UserDatabaseService(uid: user.uid).userData,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
+            print("has data!!!!!");
             UserData userData = snapshot.data;
 
 
@@ -38,6 +39,7 @@ class ProfilePage extends StatelessWidget {
               bottomNavigationBar: MyCustomNavBar(),
             );
           } else {
+            print("no data......");
             return Scaffold(
               backgroundColor: Colors.amber,
               body: Container(
