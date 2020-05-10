@@ -30,7 +30,7 @@ class ProfilePage extends StatelessWidget {
               backgroundColor: Colors.amber,
               body: ListView(
                 children: <Widget>[
-                  ProfileHeader(example, fullName, ud.phoneNumber, ud.email),
+                  ProfileHeader(fullName, ud.phoneNumber, ud.email),
                   ProfileBody(),
                 ],
               ),
@@ -53,16 +53,23 @@ class ProfilePage extends StatelessWidget {
 
 class ProfileHeader extends StatelessWidget {
 
-  final AssetImage profilePic;
   final String fullName;
   final String phoneNumber;
   final String emailAddress;
+  final AssetImage profilePic;
 
-  ProfileHeader(this.profilePic, this.fullName, this.phoneNumber, this.emailAddress);
+  ProfileHeader(this.fullName, this.phoneNumber, this.emailAddress, [this.profilePic]);
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
+    AssetImage _profilePic;
+
+    if(profilePic == null) {
+      _profilePic = example;
+    } else {
+      _profilePic = profilePic;
+    }
 
     return Container(
       color: Colors.orange,
@@ -70,7 +77,7 @@ class ProfileHeader extends StatelessWidget {
       width: width,
       child: Column(
         children: <Widget>[
-          ProfileImage(profilePic),
+          ProfileImage(_profilePic),
           Text(fullName, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24.0,)),
           Text(phoneNumber,),
           Text(emailAddress),
