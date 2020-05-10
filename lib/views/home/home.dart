@@ -5,6 +5,14 @@ import 'package:realtyapp/views/home/search.dart';
 import 'package:realtyapp/views/home/chat.dart';
 import 'package:realtyapp/views/home/more.dart';
 import 'package:realtyapp/views/home/detail.dart';
+import 'package:realtyapp/views/more/contact_us.dart';
+import 'package:realtyapp/views/more/mortgage_calculator.dart';
+import 'package:realtyapp/views/more/our_team.dart';
+import 'package:realtyapp/views/more/recently_viewed.dart';
+import 'package:realtyapp/views/profile/my_agent.dart';
+import 'package:realtyapp/views/profile/my_documents.dart';
+import 'package:realtyapp/views/profile/profile_preferences.dart';
+import 'package:realtyapp/views/profile/profile_settings.dart';
 import 'favorites.dart';
 
 import 'package:realtyapp/services/firestore_db.dart';
@@ -22,11 +30,25 @@ class Home extends StatelessWidget {
       home: SearchView(),
       initialRoute: '/',
       routes: {
+        // Primary NavBar Routes
         '/favorites': (context) => FavoritesPage(),
         '/profile': (context) => ProfilePage(),
         '/chat': (context) => ChatPage(),
         '/more': (context) => MorePage(),
         '/detail': (context) => DetailPage(),
+
+        // Secondary Profile Routes
+        '/profile/agent': (context) => MyAgentPage(),
+        '/profile/documents': (context) => MyDocumentsPage(),
+        '/profile/preferences': (context) => ProfilePreferencesPage(),
+        '/profile/settings': (context) => ProfileSettingsPage(),
+
+        // Secondary More Page Routes
+        '/more/contactus': (context) => ContactUsPage(),
+        '/more/calculator': (context) => MortgageCalculatorPage(),
+        '/more/ourteam': (context) => OurTeamPage(),
+        '/more/recent': (context) => RecentlyViewedPage(),
+
       },
     );
   }

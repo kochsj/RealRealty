@@ -16,7 +16,7 @@ class MorePage extends StatelessWidget {
     'Contact Us',
   ];
 
-  void _signOutFunction() async {
+  void _signOut() async {
     await AuthService().signOut();
   }
 
@@ -24,18 +24,50 @@ class MorePage extends StatelessWidget {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
 
-    List<Widget> moreChildren = [];
-    for (String name in buttonNames){
-      moreChildren.add(customListMenuButton(context, name, width));
-    }
-    moreChildren.add(customListMenuButton(context, 'Sign Out', width, Icons.settings_power, _signOutFunction));
+//    List<Widget> moreChildren = [];
+//    for (String name in buttonNames){
+//      moreChildren.add(customListMenuButton(context, name, width));
+//    }
+//    moreChildren.add(customListMenuButton(context, 'Sign Out', width, Icons.settings_power, '', _signOutFunction));
 
     return Scaffold(
       appBar: AppBar(
         title: Text('More Relator', style: TextStyle(fontSize: 28.0)),
       ),
       body: ListView(
-        children: moreChildren,
+        children: <Widget>[
+          CustomListMenuButton(
+//            context: context,
+            buttonText: "Recently Viewed",
+            width: width,
+            routeName: '/more/recent',
+          ),
+          CustomListMenuButton(
+//            context: context,
+            buttonText: "Our Team",
+            width: width,
+            routeName: '/more/ourteam',
+          ),
+          CustomListMenuButton(
+//            context: context,
+            buttonText: "Mortgage Calculator",
+            width: width,
+            routeName: '/more/calculator',
+          ),
+          CustomListMenuButton(
+//            context: context,
+            buttonText: "Contact Us",
+            width: width,
+            routeName: '/more/contactus',
+          ),
+          CustomListMenuButton(
+//            context: context,
+            buttonText: "Sign Out",
+            width: width,
+            icon: Icons.settings_power,
+            callback: _signOut,
+          ),
+        ],
       ),
       bottomNavigationBar: MyCustomNavBar(),
     );

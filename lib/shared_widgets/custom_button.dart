@@ -21,41 +21,55 @@ GestureDetector customSearchViewHouseButton(BuildContext context, House house, d
   );
 }
 
+class CustomListMenuButton extends StatelessWidget {
+  final String buttonText;
+  final double width;
+  final IconData icon;
+  final String routeName;
+  final Function callback;
+  CustomListMenuButton({this.buttonText, this.width, this.icon, this.routeName, this.callback});
 
-GestureDetector customListMenuButton(BuildContext context, String buttonText, double width, [IconData icon, Function callback]) {
-  if (icon == null) {
-    icon = Icons.arrow_forward_ios;
-  }
+  @override
+  Widget build(BuildContext context) {
+    Function _callback;
+    IconData _icon;
 
-  if (callback == null) {
-    callback = () => print("Going to $buttonText....");
-  }
+    if (icon == null) {
+      _icon = Icons.arrow_forward_ios;
+    }
 
-  return GestureDetector(
-    onTap: () {
-      callback();
-//      Navigator.pushNamed(context, '/detail', arguments: ScreenArguments(house));
-    },
-    //custom button
-    child: Container(
-      width: width,
-      padding: EdgeInsets.all(15.0),
-      decoration: BoxDecoration(
-          color: Colors.orange,
-          borderRadius: BorderRadius.circular(8.0),
-          border: Border.all(color: Colors.black)
+    if (callback == null) {
+//    callback = () => print("Going to $buttonText....");
+      _callback = () => Navigator.pushNamed(context, routeName);
+    } else {
+      _callback = callback;
+    }
+
+    return GestureDetector(
+      onTap: () {
+        _callback();
+      },
+      //custom button
+      child: Container(
+          width: width,
+          padding: EdgeInsets.all(15.0),
+          decoration: BoxDecoration(
+              color: Colors.orange,
+              borderRadius: BorderRadius.circular(8.0),
+              border: Border.all(color: Colors.black)
+          ),
+          child: Row(
+            children: <Widget>[
+              Icon(_icon),
+              Padding(padding: EdgeInsets.only(left: 12.0),),
+              Text(buttonText, style: TextStyle(fontSize: 36),),
+            ],
+          )
       ),
-//      child: Text(buttonText),
-      child: Row(
-        children: <Widget>[
-          Icon(icon),
-          Padding(padding: EdgeInsets.only(left: 12.0),),
-          Text(buttonText, style: TextStyle(fontSize: 36),),
-        ],
-      )
-    ),
-  );
+    );
+  }
 }
+
 
 class NavButton extends StatelessWidget {
   final String name;

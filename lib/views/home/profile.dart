@@ -119,10 +119,30 @@ class ProfileBody extends StatelessWidget {
           children: <Widget>[
             UsersAgentRow(),
             usersHomeRow,
-            customListMenuButton(context, "Preferences", width, Icons.account_circle),
-            customListMenuButton(context, "Settings", width, Icons.settings),
-            customListMenuButton(context, "My Documents", width, Icons.archive),
-            customListMenuButton(context, "Sign Out", width, Icons.settings_power, _signOut),
+            CustomListMenuButton(
+              buttonText: "Preferences",
+              width: width,
+              icon: Icons.account_circle,
+              routeName: '/profile/preferences',
+            ),
+            CustomListMenuButton(
+              buttonText: "Settings",
+              width: width,
+              icon: Icons.settings,
+              routeName: '/profile/settings',
+            ),
+            CustomListMenuButton(
+              buttonText: "My Documents",
+              width: width,
+              icon: Icons.archive,
+              routeName: '/profile/documents',
+            ),
+            CustomListMenuButton(
+              buttonText: "Sign Out",
+              width: width,
+              icon: Icons.settings_power,
+              callback: _signOut,
+            ),
           ],
         )
     );
@@ -162,6 +182,7 @@ class UsersAgentRow extends StatelessWidget {
       onTap: () {
 //      TODO: agent route/view (?)
         print("go to agent");
+        Navigator.of(context).pushNamed('/profile/agent');
 //      Navigator.pushNamed(context, '/detail', arguments: ScreenArguments(house));
       },
       //custom button
