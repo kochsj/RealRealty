@@ -119,7 +119,7 @@ class ProfileBody extends StatelessWidget {
         width: width,
         child: Column(
           children: <Widget>[
-            UsersAgentRow(),
+            UsersAgentRow(_userData),
             usersHomeRow,
             CustomListMenuButton(
               buttonText: "Preferences",
@@ -176,9 +176,20 @@ class ProfileImage extends StatelessWidget {
 }
 
 class UsersAgentRow extends StatelessWidget {
+  final UserData _userData;
+
+  UsersAgentRow(this._userData);
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
+
+    Widget agentSnapshot = Container();
+
+
+    if(_userData.agent != null){
+      agentSnapshot = _userData.agent.company != null ? Text("~ ${_userData.agent.firstName} ${_userData.agent.lastName} - ${_userData.agent.company}", style: TextStyle(fontSize: 20.0)) : Text("~ ${_userData.agent.firstName} ${_userData.agent.lastName}", style: TextStyle(fontSize: 20.0));
+    }
 
     return GestureDetector(
       onTap: () {
@@ -210,7 +221,7 @@ class UsersAgentRow extends StatelessWidget {
                 children: <Widget>[
                   Padding(padding: EdgeInsets.only(left: 40.0),),
                   // TODO: add real agent info
-                  Text("~ Samantha Hill - Real Realty", style: TextStyle(fontSize: 20.0),)
+                  agentSnapshot,
                 ],
               ),
             ],),

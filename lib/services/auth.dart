@@ -13,6 +13,10 @@ class AuthService {
     return user != null ? User(uid: user.uid, firstName: firstName, lastName: lastName, phoneNumber: phoneNumber, email: email) : null;
   }
 
+  UserData _userDataFromFirebaseUser(FirebaseUser user, [String firstName, String lastName, String phoneNumber, String email]) {
+    return user != null ? UserData(uid: user.uid, firstName: firstName, lastName: lastName, phoneNumber: phoneNumber, email: email) : null;
+  }
+
 
   // auth change user stream
   Stream<User> get user {
@@ -57,8 +61,9 @@ class AuthService {
       AuthResult _result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       FirebaseUser _firebaseUser = _result.user;
       User _user = _userFromFirebaseUser(_firebaseUser, firstName, lastName, phoneNumber, email);
+      UserData _userData = _userDataFromFirebaseUser(_firebaseUser, firstName, lastName, phoneNumber, email);
       // create document in firestore
-      await UserDatabaseService(uid: _user.uid).updateUserData(_user);
+      await UserDatabaseService(uid: _user.uid).updateUserData(_userData);
 
       return _user;
     } catch(e) {

@@ -22,14 +22,14 @@ class UserDatabaseService {
     return json.encode(dyn);
   }
 
-  Future updateUserData(User user) async {
+  Future updateUserData(UserData user) async {
     return await userCollection.document(uid).setData({
       "first_name": user.firstName,
       "last_name": user.lastName,
       "phone_number": user.phoneNumber,
       "email": user.email,
       "house": user.house,
-      "agent": agentToJson(user.agent),
+      "agent": user.agent != null ? agentToJson(user.agent) : null,
       "profile_picture": user.profilePicture,
     });
   }
