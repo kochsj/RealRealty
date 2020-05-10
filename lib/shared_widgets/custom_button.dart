@@ -36,6 +36,8 @@ class CustomListMenuButton extends StatelessWidget {
 
     if (icon == null) {
       _icon = Icons.arrow_forward_ios;
+    } else {
+      _icon = icon;
     }
 
     if (callback == null) {

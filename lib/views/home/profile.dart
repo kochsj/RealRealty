@@ -27,7 +27,7 @@ class ProfilePage extends StatelessWidget {
 
 
             return Scaffold(
-              backgroundColor: Colors.amber,
+              backgroundColor: Colors.orange,
               body: ListView(
                 children: <Widget>[
                   ProfileHeader(userData),
