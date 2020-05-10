@@ -180,8 +180,7 @@ class UsersAgentRow extends StatelessWidget {
                 children: <Widget>[
                   Icon(Icons.email),
                   Padding(padding: EdgeInsets.only(left: 12.0),),
-                  Text("Your Agent", style: TextStyle(fontSize: 36),),
-
+                  Text("My Agent", style: TextStyle(fontSize: 36),),
                 ],
               ),
               Row(
