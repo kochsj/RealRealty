@@ -82,6 +82,7 @@ class MyAgentPage extends StatelessWidget {
                           RaisedButton(
                             onPressed: () async {
                               print("no");
+                              Navigator.of(context).pushReplacementNamed("/profile");
                             },
                             child: Text("No"),
                           )
