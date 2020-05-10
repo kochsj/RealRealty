@@ -36,6 +36,7 @@ class _MortgageCalculatorPageState extends State<MortgageCalculatorPage> {
                   children: <Widget>[
                     SizedBox(height: 20,),
                     TextFormField(
+                      keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                         hintText: "Total Loan Amount",
                       ),
@@ -52,6 +53,7 @@ class _MortgageCalculatorPageState extends State<MortgageCalculatorPage> {
                     ),
                     SizedBox(height: 20,),
                     TextFormField(
+                      keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                         hintText: "Annual Interest Rate",
                       ),
@@ -68,13 +70,22 @@ class _MortgageCalculatorPageState extends State<MortgageCalculatorPage> {
                     ),
                     SizedBox(height: 20,),
                     TextFormField(
+                      keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                         hintText: "Loan Duration (Years)",
                       ),
                       validator: (value) {
                         if (value.isEmpty) {
                           return "please enter a valid loan duration";
-                        } else { return null; }
+                        } else {
+                          try {
+                            double.parse(value);
+                            return null;
+                          } catch(e) {
+                            return "please enter a valid loan duration";
+                          }
+
+                        }
                       },
                       onChanged: (value) {
                         setState(() {
@@ -89,15 +100,6 @@ class _MortgageCalculatorPageState extends State<MortgageCalculatorPage> {
                         int p = int.parse(loanAmount);
                         double i = double.parse(annualInterestRate)/1200;
                         double n = double.parse(loanDuration)*12;
-
-                        print(p);
-                        print(i);
-                        print(n);
-
-                        print(i*(1+i));
-
-                        print(pow((i*(1+i)), n));
-                        print(pow((1+i), n));
 
                         int payment = (p*(i*pow((1+i), n)) ~/ (pow((1+i), n)-1));
 
