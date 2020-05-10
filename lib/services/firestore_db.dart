@@ -51,7 +51,7 @@ class UserDatabaseService {
 
   // get individual user doc stream
   Stream<UserData> get userData {
-    print("getting userdata from firestore.... from : $uid");
+//    print("getting userdata from firestore.... from : $uid");
     return userCollection.document(uid).snapshots()
       .map(_userDataFromSnapshot);
   }

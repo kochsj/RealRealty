@@ -42,8 +42,6 @@ class MyAgentPage extends StatelessWidget {
               );
             }
           }
-
-          print("no data......");
           return Scaffold(
             backgroundColor: Colors.orange,
             appBar: AppBar(
@@ -89,8 +87,6 @@ class MyAgentPage extends StatelessWidget {
                         ],
                       ),
                     )
-
-
                   ],
                 ),
               )
