@@ -6,6 +6,7 @@ import 'package:realtyapp/models/user.dart';
 import 'package:realtyapp/services/auth.dart';
 import 'package:provider/provider.dart';
 import 'package:realtyapp/services/firestore_db.dart';
+import 'package:realtyapp/shared_widgets/house_list_tile.dart';
 import 'package:realtyapp/shared_widgets/loading.dart';
 
 Text profileText() {
@@ -34,7 +35,16 @@ class ProfilePage extends StatelessWidget {
                   ProfileBody(userData),
                 ],
               ),
-
+              floatingActionButton: FloatingActionButton(onPressed: () async {
+                userData.house = House(
+                  zpid: "58729009957732",
+                  streetAddress: "2113 4th Ave",
+                  city: "Everett",
+                  state: "WA",
+                  zipCode: "98201",
+                );
+                await UserDatabaseService(uid: userData.uid).updateUserData(userData);
+              },),
               bottomNavigationBar: MyCustomNavBar(),
             );
           } else {
@@ -106,7 +116,7 @@ class ProfileBody extends StatelessWidget {
     Widget usersHomeRow;
 
     if(_userData.house == null) {
-      usersHomeRow = Container();
+      usersHomeRow = UsersHomeRow(null);
     } else {
 // TODO: how to store a user's house in the DB?
       usersHomeRow = UsersHomeRow(_userData.house);
@@ -126,23 +136,17 @@ class ProfileBody extends StatelessWidget {
               routeName: '/profile/preferences',
             ),
             CustomListMenuButton(
-              buttonText: "Settings",
-              width: width,
-              icon: Icons.settings,
-              routeName: '/profile/settings',
-            ),
-            CustomListMenuButton(
               buttonText: "My Documents",
               width: width,
               icon: Icons.archive,
               routeName: '/profile/documents',
             ),
-            CustomListMenuButton(
-              buttonText: "Sign Out",
-              width: width,
-              icon: Icons.settings_power,
-              callback: _signOut,
-            ),
+//            CustomListMenuButton(
+//              buttonText: "Sign Out",
+//              width: width,
+//              icon: Icons.settings_power,
+//              callback: _signOut,
+//            ),
           ],
         )
     );
@@ -236,16 +240,67 @@ class UsersHomeRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    // if there is a users house, i want there to be tile similar but different than the House list tile
+    Widget houseSnapshot = usersHouse != null ? HouseListTile(house: usersHouse) : NoHomeTile();
+
+    return
+  }
+}
+
+
+class NoHomeTile extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
 
-    return Container(
-      width: width,
-      child: Row(
-        children: <Widget>[
-          Text("Your Home:"),
-          Icon(Icons.home),
-          Text("123 Main Street")
-        ],
+    return GestureDetector(
+      onTap: () {
+        print("going to no home");
+      },
+      child: Container(
+        width: width,
+        padding: EdgeInsets.all(15.0),
+        decoration: BoxDecoration(
+            color: Colors.orange,
+            borderRadius: BorderRadius.circular(8.0),
+            border: Border.all(color: Colors.black)
+        ),
+//      child: Text(buttonText),
+        child: Column(
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                Icon(Icons.home),
+                Padding(padding: EdgeInsets.only(left: 12.0),),
+                Text("My Home", style: TextStyle(fontSize: 36),),
+              ],
+            ),
+          ],),
+      ),
+    );
+  }
+}
+
+class MyHomeTile extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, '/detail', arguments: ScreenArguments(house));
+      },
+      //custom button
+      child: Container(
+        width: width,
+        padding: EdgeInsets.all(12.0),
+        decoration: BoxDecoration(
+            color: Colors.orange,
+            borderRadius: BorderRadius.circular(8.0),
+            border: Border.all(color: Colors.black)
+        ),
+        child: Text(house.streetAddress),
       ),
     );
   }

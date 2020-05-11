@@ -3,16 +3,6 @@ import 'package:flutter/cupertino.dart';
 
 import '../services/local_db.dart';
 
-House clientFromJson(String str) {
-  final jsonData = json.decode(str);
-  return House.fromMap(jsonData);
-}
-
-String clientToJson(House data) {
-  final dyn = data.toMap();
-  return json.encode(dyn);
-}
-
 class House {
   int id;
   String zpid;
