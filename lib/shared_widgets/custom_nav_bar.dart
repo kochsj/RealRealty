@@ -7,10 +7,10 @@ class MyCustomNavBar extends StatelessWidget {
     return Container(
       child: Row(
         children: <Widget>[
-          NavButton('Home', Icons.home, '/'),
-          NavButton('Favorite', Icons.favorite, '/favorites'),
-          NavButton('Profile', Icons.add_circle, '/profile'),
-          NavButton('Chat', Icons.chat_bubble, '/chat'),
+          NavButton('Search', Icons.search, '/'),
+          NavButton('Favorites', Icons.favorite_border, '/favorites'),
+          NavButton('Your Home', Icons.pin_drop, '/profile'),
+          NavButton('Chat', Icons.chat_bubble_outline, '/chat'),
           NavButton('More', Icons.list, '/more'),
         ],
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -18,7 +18,6 @@ class MyCustomNavBar extends StatelessWidget {
       height: 90,
       padding: EdgeInsets.only(top: 5, bottom: 10),
       color: Colors.orange,
-
 
     );
   }
