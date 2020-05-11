@@ -118,7 +118,6 @@ class ProfileBody extends StatelessWidget {
     if(_userData.house == null) {
       usersHomeRow = UsersHomeRow(null);
     } else {
-// TODO: how to store a user's house in the DB?
       usersHomeRow = UsersHomeRow(_userData.house);
     }
 
@@ -258,6 +257,8 @@ class NoHomeTile extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         print("going to no home");
+        // TODO: how to store a user's house in the DB?
+        // TODO: render page with form
       },
       child: Container(
         margin: EdgeInsets.all(10.0),

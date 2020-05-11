@@ -58,7 +58,6 @@ class MyAgentPage extends StatelessWidget {
                     SizedBox(height: 100.0,),
                     Text("Would you like to be contacted about finding the right agent for you?", style: TextStyle(), textAlign: TextAlign.center,),
                     SizedBox(height: 10.0,),
-//                    TODO: ask a few questions... what area do you want to live in? what are you looking for?
                     Container(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -66,6 +65,11 @@ class MyAgentPage extends StatelessWidget {
                           RaisedButton(
                             onPressed: () async {
                               print("yes");
+
+                              //TODO: ask a few questions... what area do you want to live in? what are you looking for?
+                              // instead of forcing an agent like in test case
+
+
                               userData.agent = Agent(
                                 firstName: "Samantha",
                                 lastName: "TestCase",

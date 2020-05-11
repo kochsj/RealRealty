@@ -64,7 +64,7 @@ class MorePage extends StatelessWidget {
             buttonText: "Settings",
             width: width,
             icon: Icons.settings,
-            routeName: '/profile/settings',
+            routeName: '/more/settings',
           ),
           CustomListMenuButton(
 //            context: context,
