@@ -17,7 +17,7 @@ class RecentlyViewedPage extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             List<House> houses = snapshot.data;
-            houses.sort((a, b) => a.timeStamp.compareTo(b.timeStamp));
+            houses.sort((a, b) => b.timeStamp.compareTo(a.timeStamp));
 
             return Scaffold(
               appBar: AppBar(
