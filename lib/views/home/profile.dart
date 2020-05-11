@@ -127,8 +127,8 @@ class ProfileBody extends StatelessWidget {
         width: width,
         child: Column(
           children: <Widget>[
-            UsersAgentRow(_userData),
             usersHomeRow,
+            UsersAgentRow(_userData),
             CustomListMenuButton(
               buttonText: "Preferences",
               width: width,
@@ -202,7 +202,8 @@ class UsersAgentRow extends StatelessWidget {
       },
       //custom button
       child: Container(
-          width: width,
+        margin: EdgeInsets.all(10.0),
+        width: width,
           padding: EdgeInsets.all(15.0),
           decoration: BoxDecoration(
               color: Colors.orange,
@@ -242,9 +243,9 @@ class UsersHomeRow extends StatelessWidget {
   Widget build(BuildContext context) {
 
     // if there is a users house, i want there to be tile similar but different than the House list tile
-    Widget houseSnapshot = usersHouse != null ? HouseListTile(house: usersHouse) : NoHomeTile();
+    Widget houseSnapshot = usersHouse != null ? MyHomeTile(myHome: usersHouse,) : NoHomeTile();
 
-    return
+    return houseSnapshot;
   }
 }
 
@@ -259,6 +260,7 @@ class NoHomeTile extends StatelessWidget {
         print("going to no home");
       },
       child: Container(
+        margin: EdgeInsets.all(10.0),
         width: width,
         padding: EdgeInsets.all(15.0),
         decoration: BoxDecoration(
@@ -283,24 +285,66 @@ class NoHomeTile extends StatelessWidget {
 }
 
 class MyHomeTile extends StatelessWidget {
+  final House myHome;
+  MyHomeTile({this.myHome});
+  
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
 
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, '/detail', arguments: ScreenArguments(house));
+        print("its your house!");
+//        Navigator.pushNamed(context, '/detail', arguments: ScreenArguments(house));
       },
       //custom button
       child: Container(
+        margin: EdgeInsets.all(10.0),
+//        margin: EdgeInsets.only(left: 5.0, right: 5.0),
         width: width,
         padding: EdgeInsets.all(12.0),
         decoration: BoxDecoration(
-            color: Colors.orange,
-            borderRadius: BorderRadius.circular(8.0),
-            border: Border.all(color: Colors.black)
+          image: DecorationImage(
+            image: AssetImage("media/house_for_sale.jpg"),
+            fit: BoxFit.cover,
+          ),
+          color: Colors.orange,
+          borderRadius: BorderRadius.circular(8.0),
+          border: Border.all(color: Colors.black)
         ),
-        child: Text(house.streetAddress),
+        child: Column(
+          children: <Widget>[
+            Container(
+              decoration: BoxDecoration(color: Colors.white54, borderRadius: BorderRadius.circular(8.0),),
+              child: Row(
+                children: <Widget>[
+                  Icon(Icons.home),
+                  Padding(padding: EdgeInsets.only(left: 12.0),),
+                  Text("My Home", style: TextStyle(fontSize: 36),),
+                ],
+              ),
+            ),
+//            Row(
+//              children: <Widget>[
+//                Icon(Icons.home),
+//                Padding(padding: EdgeInsets.only(left: 12.0),),
+//                Container(
+//                  decoration: BoxDecoration(color: Colors.white54),
+//                  child: Text("My Home", style: TextStyle(fontSize: 36),),
+//                )
+//              ],
+//            ),
+            SizedBox(height: 20.0,),
+            Container(
+              decoration: BoxDecoration(color: Colors.white54, borderRadius: BorderRadius.circular(8.0)),
+              child: Row(
+                children: <Widget>[
+                  Padding(padding: EdgeInsets.only(left: 20.0),),
+                  Text(myHome.streetAddress),
+                ],
+              ),
+            ),
+          ],),
       ),
     );
   }

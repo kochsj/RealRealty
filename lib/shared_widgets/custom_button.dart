@@ -33,6 +33,9 @@ class CustomListMenuButton extends StatelessWidget {
       },
       //custom button
       child: Container(
+          margin: EdgeInsets.all(10.0),
+
+//          margin: EdgeInsets.only(left: 5.0, right: 5.0),
           width: width,
           padding: EdgeInsets.all(15.0),
           decoration: BoxDecoration(
