@@ -1,25 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../models/house.dart';
-
-GestureDetector customSearchViewHouseButton(BuildContext context, House house, double top, double left, [callback]) {
-  return GestureDetector(
-    onTap: () {
-      callback(house);
-    },
-    // The custom button
-    child: Container(
-      margin: EdgeInsets.only(top: top, left: left),
-      padding: EdgeInsets.all(12.0),
-      decoration: BoxDecoration(
-          color: Colors.orange,
-          borderRadius: BorderRadius.circular(8.0),
-          border: Border.all(color: Colors.black)
-      ),
-      child: Text(house.streetAddress),
-    ),
-  );
-}
 
 class CustomListMenuButton extends StatelessWidget {
   final String buttonText;

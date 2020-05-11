@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
+
 import '../services/local_db.dart';
 
 House clientFromJson(String str) {
@@ -21,6 +23,7 @@ class House {
   String photoURL;
   String beds;
   String baths;
+  int timeStamp;
 
   House({
     this.id,
@@ -32,6 +35,7 @@ class House {
     this.photoURL,
     this.beds,
     this.baths,
+    this.timeStamp,
   });
 
   factory House.fromMap(Map<String, dynamic> json) => new House(
@@ -44,6 +48,7 @@ class House {
         photoURL: json["photo_url"],
         beds: json["beds"],
         baths: json["baths"],
+        timeStamp: json["time_stamp"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -55,6 +60,7 @@ class House {
         "zip_code": zipCode,
         "photo_url": photoURL,
         "beds": beds,
-        "baths": baths
+        "baths": baths,
+        "time_stamp": timeStamp,
       };
 }

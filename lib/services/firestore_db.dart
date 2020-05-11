@@ -64,23 +64,57 @@ class UserDatabaseService {
 //  }
 }
 
+class RecentlyViewedService {
+  final String uid;
+  RecentlyViewedService({this.uid});
 
-//class AgentDatabaseService {
-//  // collection reference
-//  final CollectionReference userCollection = Firestore.instance.collection('agents');
-//
-//  Future updateAgentData(Agent agent) async {
-//    return await userCollection.document(uid).setData({
-//      "first_name": user.firstName,
-//      "last_name": user.lastName,
-//      "phone_number": user.phoneNumber,
-//      "email": user.email,
-//      "house": user.house,
-//      "agent": user.agent,
-//      "profile_picture": user.profilePicture,
-//    });
-//  }
-//}
+  Future updateUsersRecentlyViewedData(House house) async {
+    // collection reference
+    final CollectionReference usersRecentlyViewedCollection = Firestore.instance.collection('users').document(uid).collection('recently_viewed');
+
+    return await usersRecentlyViewedCollection.document(house.zpid).setData({
+      "zpid": house.zpid,
+      "street_address": house.streetAddress,
+      "city": house.city,
+      "state": house.state,
+      "zip_code": house.zipCode,
+      "photo_url": house.photoURL,
+      "beds": house.beds,
+      "baths": house.baths,
+      "time_stamp": new DateTime.now().millisecondsSinceEpoch,
+    });
+  }
+
+  Future deleteUsersRecentlyViewed(House house) async {
+    final CollectionReference usersRecentlyViewedCollection = Firestore.instance.collection('users').document(uid).collection('recently_viewed');
+    try {
+      return await usersRecentlyViewedCollection.document(house.zpid).delete();
+    } catch(e) {
+      print(e.toString());
+    }
+  }
+
+  //user data from document snapshot
+  List<House>_houseFromSnapshot(QuerySnapshot snapshot) {
+    List<House> houses = [];
+    for(var house in snapshot.documents) {
+      House temp = House(zpid: house.data["zpid"], streetAddress: house.data["street_address"], city: house.data["city"], state: house.data["state"], zipCode: house.data["zip_code"], photoURL: house.data["photo_url"], beds: house.data["beds"], baths: house.data["baths"], timeStamp: house.data["time_stamp"]);
+      houses.add(temp);
+    }
+    return houses;
+  }
+
+  // get individual users favorite houses stream
+  Stream<List<House>> get recentlyViewedHouses {
+    final CollectionReference usersRecentlyViewedCollection = Firestore.instance.collection('users').document(uid).collection('recently_viewed');
+    return usersRecentlyViewedCollection.snapshots()
+        .map(_houseFromSnapshot);
+  }
+
+}
+
+
+
 
 class FavoritesDatabaseService {
   final String uid;

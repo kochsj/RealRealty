@@ -27,8 +27,8 @@ class FavoritesState extends State<FavoritesPage> {
 
     return StreamBuilder<List<House>>(
         stream: FavoritesDatabaseService(uid: user.uid).favoriteHouses,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
+            builder: (context, snapshot) {
+            if (snapshot.hasData) {
             List<House> houses = snapshot.data;
 
             return Scaffold(
