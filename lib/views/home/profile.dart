@@ -257,6 +257,7 @@ class NoHomeTile extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         print("going to no home");
+        Navigator.pushNamed(context, '/profile/myhome');
         // TODO: how to store a user's house in the DB?
         // TODO: render page with form
       },

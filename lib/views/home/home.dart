@@ -11,6 +11,7 @@ import 'package:realtyapp/views/more/our_team.dart';
 import 'package:realtyapp/views/more/recently_viewed.dart';
 import 'package:realtyapp/views/profile/my_agent.dart';
 import 'package:realtyapp/views/profile/my_documents.dart';
+import 'package:realtyapp/views/profile/my_home.dart';
 import 'package:realtyapp/views/profile/profile_preferences.dart';
 import 'package:realtyapp/views/more/more_settings.dart';
 import 'favorites.dart';
@@ -41,6 +42,7 @@ class Home extends StatelessWidget {
         '/profile/agent': (context) => MyAgentPage(),
         '/profile/documents': (context) => MyDocumentsPage(),
         '/profile/preferences': (context) => ProfilePreferencesPage(),
+        '/profile/myhome': (context) => RegisterMyHome(),
 
         // Secondary More Page Routes
         '/more/contactus': (context) => ContactUsPage(),
