@@ -45,7 +45,7 @@ class UserDatabaseService {
   }
 
   //user data from document snapshot
-  UserData _userDataFromSnapshot(DocumentSnapshot snapshot) {
+  UserData _userFromSnapshot(DocumentSnapshot snapshot) {
 //    print("making user data...");
     return UserData(
       uid: uid,
@@ -63,7 +63,7 @@ class UserDatabaseService {
   Stream<UserData> get userData {
 //    print("getting userdata from firestore.... from : $uid");
     return userCollection.document(uid).snapshots()
-      .map(_userDataFromSnapshot);
+      .map(_userFromSnapshot);
   }
 
 

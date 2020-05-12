@@ -1,14 +1,15 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:realtyapp/models/house.dart';
 import 'package:realtyapp/models/user.dart';
 import 'package:realtyapp/services/firestore_db.dart';
 
-class HouseFormArguments {
-  final UserData userData;
-  HouseFormArguments(this.userData);
-}
+//class HouseFormArguments {
+//  final User userData;
+//  HouseFormArguments(this.userData);
+//}
 
 class RegisterMyHome extends StatefulWidget {
   @override
@@ -21,7 +22,7 @@ class _RegisterMyHomeState extends State<RegisterMyHome> {
   String _homeAddress = '';
   String _city = '';
   String _state = '';
-  String _zipcode = '';
+  String _zipCode = '';
 
   final List<String> _listOfStateAbrv = [
     '',
@@ -79,12 +80,23 @@ class _RegisterMyHomeState extends State<RegisterMyHome> {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
+    final user = Provider.of<UserData>(context);
 
-    final HouseFormArguments args = ModalRoute
-        .of(context)
-        .settings
-        .arguments;
+//    print("xxx ${user.house.streetAddress}");
+//    print(user.house.city);
+//    print(user.house.state);
+//    print(user.house.zipCode);
+
+    setState(() {
+      _homeAddress = user.house.streetAddress != null ? user.house.streetAddress : '';
+      _city = user.house.city != null ? user.house.city : '';
+      _state = user.house.state != null ? user.house.state : '';
+      _zipCode = user.house.zipCode != null ? user.house.zipCode : '';
+    });
+
+
+
+    double width = MediaQuery.of(context).size.width;
 
     List<DropdownMenuItem<String>> _stateList = [];
 
@@ -118,7 +130,8 @@ class _RegisterMyHomeState extends State<RegisterMyHome> {
               ),
               Text("What is your home address?"),
               TextFormField(
-                decoration: InputDecoration(hintText: "street address"),
+                decoration: InputDecoration(hintText: _homeAddress),
+                initialValue: _homeAddress,
                 validator: (value) {
                   if (value.isEmpty) {
                     return "please enter your street address";
@@ -138,7 +151,8 @@ class _RegisterMyHomeState extends State<RegisterMyHome> {
                   children: <Widget>[
                     Flexible(
                       child: TextFormField(
-                        decoration: InputDecoration(hintText: "city"),
+                        decoration: InputDecoration(hintText: _city),
+                        initialValue: _city,
                         validator: (value) {
                           if (value.isEmpty) {
                             return "please enter your home city";
@@ -171,7 +185,8 @@ class _RegisterMyHomeState extends State<RegisterMyHome> {
                     SizedBox(
                       width: 80.0,
                       child: TextFormField(
-                        decoration: InputDecoration(hintText: "zip code"),
+                        decoration: InputDecoration(hintText: _zipCode),
+                        initialValue: _zipCode,
                         validator: (value) {
                           if (value.isEmpty) {
                             return "please enter your home city";
@@ -181,7 +196,7 @@ class _RegisterMyHomeState extends State<RegisterMyHome> {
                         },
                         onChanged: (value) {
                           setState(() {
-                            _zipcode = value;
+                            _zipCode = value;
                           });
                         },
                       ),
@@ -194,14 +209,14 @@ class _RegisterMyHomeState extends State<RegisterMyHome> {
                 child: Text("Register", style: TextStyle(color: Colors.white),),
                 onPressed: () async {
                   if(_formKey.currentState.validate()) {
-                    args.userData.house = House(
+                    user.house = House(
                       zpid: Random().nextInt(100000000).toString(),
                       streetAddress: _homeAddress,
                       city: _city,
                       state: _state,
-                      zipCode: _zipcode,
+                      zipCode: _zipCode,
                     );
-                    await UserDatabaseService(uid: args.userData.uid).updateUserData(args.userData);
+                    await UserDatabaseService(uid: user.uid).updateUserData(user);
                     Navigator.of(context).pushReplacementNamed('/profile');
                   }
                 },

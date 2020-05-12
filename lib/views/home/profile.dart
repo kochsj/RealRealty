@@ -19,7 +19,7 @@ const AssetImage example = AssetImage("media/emoji.png");
 class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<User>(context);
+    final user = Provider.of<UserData>(context);
 
     return StreamBuilder<UserData>(
         stream: UserDatabaseService(uid: user.uid).userData,
@@ -32,8 +32,8 @@ class ProfilePage extends StatelessWidget {
               backgroundColor: Colors.orange,
               body: ListView(
                 children: <Widget>[
-                  ProfileHeader(userData),
-                  ProfileBody(userData),
+                  ProfileHeader(),
+                  ProfileBody(),
                 ],
               ),
               floatingActionButton: FloatingActionButton(onPressed: () async {
@@ -64,24 +64,22 @@ class ProfilePage extends StatelessWidget {
 
 class ProfileHeader extends StatelessWidget {
 
-  final UserData _userData;
-
-  ProfileHeader(this._userData);
-
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserData>(context);
+
     double width = MediaQuery.of(context).size.width;
 
-    String fullName = _userData.firstName + ' ' + _userData.lastName;
-    String phoneNumber = _userData.phoneNumber;
-    String emailAddress = _userData.email;
+    String fullName = user.firstName + ' ' + user.lastName;
+    String phoneNumber = user.phoneNumber;
+    String emailAddress = user.email;
 
     AssetImage _profilePic;
 
-    if(_userData.profilePicture == null) {
+    if(user.profilePicture == null) {
       _profilePic = example;
     } else {
-      _profilePic = _userData.profilePicture;
+      _profilePic = user.profilePicture;
     }
 
     return Container(
@@ -102,10 +100,6 @@ class ProfileHeader extends StatelessWidget {
 
 class ProfileBody extends StatelessWidget {
 
-  final UserData _userData;
-
-  ProfileBody(this._userData);
-
   void _signOut() async {
     await AuthService().signOut();
   }
@@ -119,8 +113,8 @@ class ProfileBody extends StatelessWidget {
         width: width,
         child: Column(
           children: <Widget>[
-            UsersHomeRow(_userData),
-            UsersAgentRow(_userData),
+            UsersHomeRow(),
+            UsersAgentRow(),
             CustomListMenuButton(
               buttonText: "Preferences",
               width: width,
@@ -164,19 +158,17 @@ class ProfileImage extends StatelessWidget {
 }
 
 class UsersAgentRow extends StatelessWidget {
-  final UserData _userData;
-
-  UsersAgentRow(this._userData);
-
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserData>(context);
+
     double width = MediaQuery.of(context).size.width;
 
     Widget agentSnapshot = Container();
 
 
-    if(_userData.agent != null){
-      agentSnapshot = _userData.agent.company != null ? Text("~ ${_userData.agent.firstName} ${_userData.agent.lastName} - ${_userData.agent.company}", style: TextStyle(fontSize: 20.0)) : Text("~ ${_userData.agent.firstName} ${_userData.agent.lastName}", style: TextStyle(fontSize: 20.0));
+    if(user.agent != null){
+      agentSnapshot = user.agent.company != null ? Text("~ ${user.agent.firstName} ${user.agent.lastName} - ${user.agent.company}", style: TextStyle(fontSize: 20.0)) : Text("~ ${user.agent.firstName} ${user.agent.lastName}", style: TextStyle(fontSize: 20.0));
     }
 
     return GestureDetector(
@@ -220,16 +212,15 @@ class UsersAgentRow extends StatelessWidget {
 }
 
 class UsersHomeRow extends StatelessWidget {
-  final UserData _userData;
-  UsersHomeRow(this._userData);
 
 //  TODO: Populate with your current home info
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserData>(context);
 
     // if there is a users house, i want there to be tile similar but different than the House list tile
-    Widget houseSnapshot = _userData.house != null ? MyHomeTile(myHome: _userData.house,) : NoHomeTile(_userData);
+    Widget houseSnapshot = user.house != null ? MyHomeTile(myHome: user.house,) : NoHomeTile();
 
     return houseSnapshot;
   }
@@ -237,8 +228,6 @@ class UsersHomeRow extends StatelessWidget {
 
 
 class NoHomeTile extends StatelessWidget {
-  final UserData _userData;
-  NoHomeTile(this._userData);
 
   @override
   Widget build(BuildContext context) {
@@ -247,7 +236,7 @@ class NoHomeTile extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         print("going to no home");
-        Navigator.pushNamed(context, '/profile/myhome', arguments: HouseFormArguments(_userData));
+        Navigator.pushNamed(context, '/profile/myhome');
         // TODO: how to store a user's house in the DB?
         // TODO: render page with form
       },

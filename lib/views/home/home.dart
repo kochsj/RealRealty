@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:realtyapp/models/user.dart';
 import 'package:realtyapp/views/home/profile.dart';
 import 'package:realtyapp/views/home/search.dart';
 import 'package:realtyapp/views/home/chat.dart';
@@ -23,6 +24,42 @@ import 'package:provider/provider.dart';
 class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<User>(context);
+
+    return StreamProvider<UserData>.value(
+        value: UserDatabaseService(uid: user.uid).userData,
+        child: MaterialApp(
+          title: 'Movil Realty',
+          theme: ThemeData(
+            primarySwatch: Colors.orange,
+          ),
+          home: SearchView(),
+          initialRoute: '/',
+          routes: {
+            // Primary NavBar Routes
+            '/favorites': (context) => FavoritesPage(),
+            '/profile': (context) => ProfilePage(),
+            '/chat': (context) => ChatPage(),
+            '/more': (context) => MorePage(),
+            '/detail': (context) => DetailPage(),
+
+            // Secondary Profile Routes
+            '/profile/agent': (context) => MyAgentPage(),
+            '/profile/documents': (context) => MyDocumentsPage(),
+            '/profile/preferences': (context) => ProfilePreferencesPage(),
+            '/profile/myhome': (context) => RegisterMyHome(),
+
+            // Secondary More Page Routes
+            '/more/contactus': (context) => ContactUsPage(),
+            '/more/calculator': (context) => MortgageCalculatorPage(),
+            '/more/ourteam': (context) => OurTeamPage(),
+            '/more/recent': (context) => RecentlyViewedPage(),
+            '/more/settings': (context) => MoreSettingsPage(),
+
+
+          },
+        ),
+    );
     return MaterialApp(
       title: 'Movil Realty',
       theme: ThemeData(

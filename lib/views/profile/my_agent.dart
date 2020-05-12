@@ -8,7 +8,7 @@ import 'package:realtyapp/shared_widgets/custom_nav_bar.dart';
 class MyAgentPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<User>(context);
+    final user = Provider.of<UserData>(context);
 
     return StreamBuilder<UserData>(
         stream: UserDatabaseService(uid: user.uid).userData,

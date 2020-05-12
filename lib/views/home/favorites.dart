@@ -22,7 +22,7 @@ class FavoritesPage extends StatefulWidget {
 class FavoritesState extends State<FavoritesPage> {
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<User>(context);
+    final user = Provider.of<UserData>(context);
 
     return StreamBuilder<List<House>>(
         stream: FavoritesDatabaseService(uid: user.uid).favoriteHouses,

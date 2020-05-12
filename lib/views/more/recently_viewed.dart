@@ -10,7 +10,7 @@ import 'package:realtyapp/shared_widgets/loading.dart';
 class RecentlyViewedPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<User>(context);
+    final user = Provider.of<UserData>(context);
 
     return StreamBuilder<List<House>>(
         stream: RecentlyViewedService(uid: user.uid).recentlyViewedHouses,

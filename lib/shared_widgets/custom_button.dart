@@ -7,6 +7,7 @@ class CustomListMenuButton extends StatelessWidget {
   final IconData icon;
   final String routeName;
   final Function callback;
+
   CustomListMenuButton({this.buttonText, this.width, this.icon, this.routeName, this.callback});
 
   @override

@@ -47,7 +47,7 @@ class AuthService {
     try {
       AuthResult result = await _auth.signInWithEmailAndPassword(email: email, password: password);
       FirebaseUser _user = result.user;
-      UserDatabaseService(uid: _user.uid);
+//      UserDatabaseService(uid: _user.uid);
       return _userFromFirebaseUser(_user);
     } catch(e) {
       print(e.toString());

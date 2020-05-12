@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:realtyapp/shared_widgets/custom_button.dart';
+import 'package:realtyapp/views/profile/my_home.dart';
 
 class ProfilePreferencesPage extends StatelessWidget {
   @override
@@ -7,14 +9,11 @@ class ProfilePreferencesPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Preferences Page', style: TextStyle(fontSize: 28.0)),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text("Here is some preferences info..."),
-          ],
-        ),
-      ),
+      body: ListView(
+        children: <Widget>[
+          CustomListMenuButton(buttonText: "Update \"My Home\"", routeName: '/profile/myhome')
+        ],
+      )
 //      bottomNavigationBar: MyCustomNavBar(),
     );
   }

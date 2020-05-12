@@ -21,7 +21,7 @@ class SearchState extends State<SearchView> {
     House(streetAddress: '701 Stewart St', state: 'WA', city: 'Woodinville', zipCode: '98073', zpid: "10293948576"),
   ];
 
-  List<Widget> _constructListOfHouseButtons(User user, List<House> houses){
+  List<Widget> _constructListOfHouseButtons(UserData user, List<House> houses){
 
     List<Widget> buttons = [];
     double top = 10;
@@ -36,12 +36,12 @@ class SearchState extends State<SearchView> {
     return buttons;
   }
 
-  void _onClickHouseHandler(User user, House houseToView, List<House> listOfRecentlyViewedHouses){
+  void _onClickHouseHandler(UserData user, House houseToView, List<House> listOfRecentlyViewedHouses){
     _updateListOfRecentlyViewedHousesInDB(user, houseToView, listOfRecentlyViewedHouses);
     _changeToDetailView(houseToView);
   }
 
-  void _updateListOfRecentlyViewedHousesInDB(User user, House houseToView, List<House> listOfRecentlyViewedHouses) async {
+  void _updateListOfRecentlyViewedHousesInDB(UserData user, House houseToView, List<House> listOfRecentlyViewedHouses) async {
     listOfRecentlyViewedHouses.sort((a, b) => a.timeStamp.compareTo(b.timeStamp));
     while(listOfRecentlyViewedHouses.length >= 20) {
       House houseToRemove = listOfRecentlyViewedHouses.removeAt(0);
@@ -59,6 +59,7 @@ class SearchState extends State<SearchView> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
+    final userData = Provider.of<UserData>(context);
     List<Widget> buttons = [];
 
     return StreamBuilder<List<House>>(
@@ -66,10 +67,10 @@ class SearchState extends State<SearchView> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             List<House> houses = snapshot.data;
-            buttons = _constructListOfHouseButtons(user, houses);
+            buttons = _constructListOfHouseButtons(userData, houses);
           }
           else {
-            buttons = _constructListOfHouseButtons(user, []);
+            buttons = _constructListOfHouseButtons(userData, []);
           }
 
           return Scaffold(
@@ -100,7 +101,7 @@ class SearchState extends State<SearchView> {
   }
 }
 
-GestureDetector customSearchViewHouseButton(User user, House house, double top, double left, callback, [List<House> listOfRecentlyViewedHouses,]) {
+GestureDetector customSearchViewHouseButton(UserData user, House house, double top, double left, callback, [List<House> listOfRecentlyViewedHouses,]) {
   return GestureDetector(
     onTap: () {
       List<House> lst = listOfRecentlyViewedHouses != null ? listOfRecentlyViewedHouses : [];
