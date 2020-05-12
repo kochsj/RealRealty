@@ -11,6 +11,7 @@ class _RegisterMyHomeState extends State<RegisterMyHome> {
   String _homeAddress = '';
   String _city = '';
   String _dropdown = '';
+  String _zipcode = '';
 
   final List<String> _listOfStateAbrv = ['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY',
     'LA ', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK',
@@ -40,6 +41,7 @@ class _RegisterMyHomeState extends State<RegisterMyHome> {
               SizedBox(height: 20.0,),
               Column(
                 children: <Widget>[
+                  Text("Looks like we do not have a house on record for you yet. If you would like to add your home please simply fill out the form below!", textAlign: TextAlign.center,),
                   Text("What is your home address?"),
                   TextFormField(
                     decoration: InputDecoration(
@@ -60,9 +62,7 @@ class _RegisterMyHomeState extends State<RegisterMyHome> {
                     width: width,
                     child: Row(
                       children: <Widget>[
-                        Expanded(
-                          child: SizedBox(
-//                            width: width,
+                        Flexible(
                             child: TextFormField(
                               decoration: InputDecoration(
                                   hintText: "city"
@@ -77,7 +77,6 @@ class _RegisterMyHomeState extends State<RegisterMyHome> {
                                   _city = value;
                                 });
                               },
-                            ),
                           ),
                         ),
                         SizedBox(
@@ -98,8 +97,24 @@ class _RegisterMyHomeState extends State<RegisterMyHome> {
 
                             ),
                           ),
-
-
+                        SizedBox(
+                          width: 80.0,
+                          child: TextFormField(
+                            decoration: InputDecoration(
+                                hintText: "zip code"
+                            ),
+                            validator: (value) {
+                              if(value.isEmpty) {
+                                return "please enter your home city";
+                              } else { return null; }
+                            },
+                            onChanged: (value) {
+                              setState(() {
+                                _zipcode = value;
+                              });
+                            },
+                          ),
+                        )
                       ],
                     ),
                   ),
