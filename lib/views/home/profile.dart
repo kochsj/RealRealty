@@ -10,6 +10,8 @@ import 'package:realtyapp/shared_widgets/house_list_tile.dart';
 import 'package:realtyapp/shared_widgets/loading.dart';
 import 'package:realtyapp/views/profile/my_home.dart';
 
+import 'detail.dart';
+
 Text profileText() {
   return Text('Profile Page', style: TextStyle(fontSize: 36.0),  textWidthBasis: TextWidthBasis.longestLine,);
 }
@@ -36,16 +38,6 @@ class ProfilePage extends StatelessWidget {
                   ProfileBody(),
                 ],
               ),
-              floatingActionButton: FloatingActionButton(onPressed: () async {
-                userData.house = House(
-                  zpid: "58729009957732",
-                  streetAddress: "2113 4th Ave",
-                  city: "Everett",
-                  state: "WA",
-                  zipCode: "98201",
-                );
-                await UserDatabaseService(uid: userData.uid).updateUserData(userData);
-              },),
               bottomNavigationBar: MyCustomNavBar(),
             );
           } else {
@@ -271,63 +263,55 @@ class MyHomeTile extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-
-    return GestureDetector(
-      onTap: () {
-        print("its your house!");
-//        Navigator.pushNamed(context, '/detail', arguments: ScreenArguments(house));
-      },
-      //custom button
-      child: Container(
-        margin: EdgeInsets.all(10.0),
-//        margin: EdgeInsets.only(left: 5.0, right: 5.0),
-        width: width,
-        padding: EdgeInsets.all(12.0),
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("media/house_for_sale.jpg"),
-            fit: BoxFit.cover,
-          ),
-          color: Colors.orange,
-          borderRadius: BorderRadius.circular(8.0),
-          border: Border.all(color: Colors.black)
-        ),
-        child: Column(
-          children: <Widget>[
-            Container(
-              decoration: BoxDecoration(color: Colors.white54, borderRadius: BorderRadius.circular(8.0),),
-              child: Row(
-                children: <Widget>[
-                  Icon(Icons.home),
-                  Padding(padding: EdgeInsets.only(left: 12.0),),
-                  Text("My Home", style: TextStyle(fontSize: 36),),
-                ],
-              ),
-            ),
-//            Row(
-//              children: <Widget>[
-//                Icon(Icons.home),
-//                Padding(padding: EdgeInsets.only(left: 12.0),),
-//                Container(
-//                  decoration: BoxDecoration(color: Colors.white54),
-//                  child: Text("My Home", style: TextStyle(fontSize: 36),),
-//                )
-//              ],
+    return HouseListTile(house: myHome, isMyHouse: true);
+//    double width = MediaQuery.of(context).size.width;
+//
+//    return GestureDetector(
+//      onTap: () {
+//        print("its your house!");
+//        Navigator.pushNamed(context, '/detail', arguments: ScreenArguments(myHome));
+//      },
+//      //custom button
+//      child: Container(
+//        margin: EdgeInsets.all(10.0),
+////        margin: EdgeInsets.only(left: 5.0, right: 5.0),
+//        width: width,
+//        padding: EdgeInsets.all(12.0),
+//        decoration: BoxDecoration(
+//          image: DecorationImage(
+////            image: AssetImage("media/house_for_sale.jpg"),
+//            image: NetworkImage("https://wp-tid.zillowstatic.com/3/shutterstock_50097079-2ec9cc-630x420.jpg"),
+//            fit: BoxFit.cover,
+//          ),
+//          color: Colors.orange,
+//          borderRadius: BorderRadius.circular(8.0),
+//          border: Border.all(color: Colors.black)
+//        ),
+//        child: Column(
+//          children: <Widget>[
+//            Container(
+//              decoration: BoxDecoration(color: Colors.white54, borderRadius: BorderRadius.circular(8.0),),
+//              child: Row(
+//                children: <Widget>[
+//                  Icon(Icons.home),
+//                  Padding(padding: EdgeInsets.only(left: 12.0),),
+//                  Text("My Home", style: TextStyle(fontSize: 36),),
+//                ],
+//              ),
 //            ),
-            SizedBox(height: 20.0,),
-            Container(
-              decoration: BoxDecoration(color: Colors.white54, borderRadius: BorderRadius.circular(8.0)),
-              child: Row(
-                children: <Widget>[
-                  Padding(padding: EdgeInsets.only(left: 20.0),),
-                  Text(myHome.streetAddress),
-                ],
-              ),
-            ),
-          ],),
-      ),
-    );
+//            SizedBox(height: 20.0,),
+//            Container(
+//              decoration: BoxDecoration(color: Colors.white54, borderRadius: BorderRadius.circular(8.0)),
+//              child: Row(
+//                children: <Widget>[
+//                  Padding(padding: EdgeInsets.only(left: 20.0),),
+//                  Text(myHome.streetAddress),
+//                ],
+//              ),
+//            ),
+//          ],),
+//      ),
+//    );
   }
 }
 
