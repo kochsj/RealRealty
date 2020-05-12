@@ -9,12 +9,12 @@ Text moreText() {
 
 class MorePage extends StatelessWidget {
 
-  final List<String> buttonNames = [
-    'Recently Viewed',
-    'Our Team',
-    'Mortgage Calculator',
-    'Contact Us',
-  ];
+//  final List<String> buttonNames = [
+//    'Recently Viewed',
+//    'Our Team',
+//    'Mortgage Calculator',
+//    'Contact Us',
+//  ];
 
   void _signOut() async {
     await AuthService().signOut();
