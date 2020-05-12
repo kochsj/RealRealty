@@ -8,6 +8,8 @@ class HouseListTile extends StatelessWidget {
   final bool isMyHouse;
   HouseListTile({this.house, this.isMyHouse});
 
+
+
 //  @override
 //  Widget build(BuildContext context) {
 //    double width = MediaQuery.of(context).size.width;
@@ -18,7 +20,9 @@ class HouseListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
 
-    Widget myHomeHeader = Container();
+    Widget myHomeHeader = SizedBox(
+        height: 120.0,
+      );
 
     if(isMyHouse) {
       myHomeHeader = Container(

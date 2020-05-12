@@ -26,7 +26,7 @@ class RecentlyViewedPage extends StatelessWidget {
               body: ListView.builder(
                   itemCount: houses.length,
                   itemBuilder: (context, index){
-                    return HouseListTile(house: houses[index]);
+                    return HouseListTile(house: houses[index], isMyHouse: false);
                   }),
               bottomNavigationBar: MyCustomNavBar(),
             );
