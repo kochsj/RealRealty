@@ -19,6 +19,7 @@ class RegisterMyHome extends StatefulWidget {
 class _RegisterMyHomeState extends State<RegisterMyHome> {
   final _formKey = GlobalKey<FormState>();
 
+  bool initializingState = true;
   String _homeAddress = '';
   String _city = '';
   String _state = '';
@@ -82,19 +83,15 @@ class _RegisterMyHomeState extends State<RegisterMyHome> {
   Widget build(BuildContext context) {
     final user = Provider.of<UserData>(context);
 
-//    print("xxx ${user.house.streetAddress}");
-//    print(user.house.city);
-//    print(user.house.state);
-//    print(user.house.zipCode);
-
-    setState(() {
-      _homeAddress = user.house.streetAddress != null ? user.house.streetAddress : '';
-      _city = user.house.city != null ? user.house.city : '';
-      _state = user.house.state != null ? user.house.state : '';
-      _zipCode = user.house.zipCode != null ? user.house.zipCode : '';
-    });
-
-
+    if (user.house != null && initializingState){
+      setState(() {
+        _homeAddress = user.house.streetAddress != null ? user.house.streetAddress : '';
+        _city = user.house.city != null ? user.house.city : '';
+        _state = user.house.state != null ? user.house.state : '';
+        _zipCode = user.house.zipCode != null ? user.house.zipCode : '';
+        initializingState = false;
+      });
+    }
 
     double width = MediaQuery.of(context).size.width;
 
@@ -210,7 +207,7 @@ class _RegisterMyHomeState extends State<RegisterMyHome> {
                 onPressed: () async {
                   if(_formKey.currentState.validate()) {
                     user.house = House(
-                      zpid: Random().nextInt(100000000).toString(),
+                      zpid: "test",
                       streetAddress: _homeAddress,
                       city: _city,
                       state: _state,
