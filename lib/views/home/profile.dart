@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:realtyapp/services/firestore_db.dart';
 import 'package:realtyapp/shared_widgets/house_list_tile.dart';
 import 'package:realtyapp/shared_widgets/loading.dart';
+import 'package:realtyapp/views/profile/my_home.dart';
 
 Text profileText() {
   return Text('Profile Page', style: TextStyle(fontSize: 36.0),  textWidthBasis: TextWidthBasis.longestLine,);
@@ -113,20 +114,12 @@ class ProfileBody extends StatelessWidget {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
 
-    Widget usersHomeRow;
-
-    if(_userData.house == null) {
-      usersHomeRow = UsersHomeRow(null);
-    } else {
-      usersHomeRow = UsersHomeRow(_userData.house);
-    }
-
     return Container(
         color: Colors.amber,
         width: width,
         child: Column(
           children: <Widget>[
-            usersHomeRow,
+            UsersHomeRow(_userData),
             UsersAgentRow(_userData),
             CustomListMenuButton(
               buttonText: "Preferences",
@@ -140,12 +133,6 @@ class ProfileBody extends StatelessWidget {
               icon: Icons.archive,
               routeName: '/profile/documents',
             ),
-//            CustomListMenuButton(
-//              buttonText: "Sign Out",
-//              width: width,
-//              icon: Icons.settings_power,
-//              callback: _signOut,
-//            ),
           ],
         )
     );
@@ -233,8 +220,8 @@ class UsersAgentRow extends StatelessWidget {
 }
 
 class UsersHomeRow extends StatelessWidget {
-  final House usersHouse;
-  UsersHomeRow(this.usersHouse);
+  final UserData _userData;
+  UsersHomeRow(this._userData);
 
 //  TODO: Populate with your current home info
 
@@ -242,7 +229,7 @@ class UsersHomeRow extends StatelessWidget {
   Widget build(BuildContext context) {
 
     // if there is a users house, i want there to be tile similar but different than the House list tile
-    Widget houseSnapshot = usersHouse != null ? MyHomeTile(myHome: usersHouse,) : NoHomeTile();
+    Widget houseSnapshot = _userData.house != null ? MyHomeTile(myHome: _userData.house,) : NoHomeTile(_userData);
 
     return houseSnapshot;
   }
@@ -250,6 +237,9 @@ class UsersHomeRow extends StatelessWidget {
 
 
 class NoHomeTile extends StatelessWidget {
+  final UserData _userData;
+  NoHomeTile(this._userData);
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -257,7 +247,7 @@ class NoHomeTile extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         print("going to no home");
-        Navigator.pushNamed(context, '/profile/myhome');
+        Navigator.pushNamed(context, '/profile/myhome', arguments: HouseFormArguments(_userData));
         // TODO: how to store a user's house in the DB?
         // TODO: render page with form
       },
