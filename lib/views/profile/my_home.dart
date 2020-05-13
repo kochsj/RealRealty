@@ -127,7 +127,7 @@ class _RegisterMyHomeState extends State<RegisterMyHome> {
               ),
               Text("What is your home address?"),
               TextFormField(
-                decoration: InputDecoration(hintText: _homeAddress),
+                decoration: InputDecoration(hintText: _homeAddress != '' ? _homeAddress : "street address"),
                 initialValue: _homeAddress,
                 validator: (value) {
                   if (value.isEmpty) {
@@ -148,7 +148,7 @@ class _RegisterMyHomeState extends State<RegisterMyHome> {
                   children: <Widget>[
                     Flexible(
                       child: TextFormField(
-                        decoration: InputDecoration(hintText: _city),
+                        decoration: InputDecoration(hintText: _city != '' ? _city : "city"),
                         initialValue: _city,
                         validator: (value) {
                           if (value.isEmpty) {
@@ -182,7 +182,7 @@ class _RegisterMyHomeState extends State<RegisterMyHome> {
                     SizedBox(
                       width: 80.0,
                       child: TextFormField(
-                        decoration: InputDecoration(hintText: _zipCode),
+                        decoration: InputDecoration(hintText: _zipCode != '' ? _zipCode : "zip code"),
                         initialValue: _zipCode,
                         validator: (value) {
                           if (value.isEmpty) {
